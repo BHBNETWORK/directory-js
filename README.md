@@ -23,5 +23,5 @@ npm install --safe bitcoinjs-lib
 # Install XO
 
 ```
- npm install --global xo
+ sudo npm install --global xo
 ```
