@@ -19,3 +19,9 @@ sudo apt-get install -y build-essential
 ```
 npm install --safe bitcoinjs-lib
 ```
+
+# Install XO
+
+```
+ npm install --global xo
+```
