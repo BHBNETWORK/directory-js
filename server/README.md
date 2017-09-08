@@ -36,9 +36,9 @@ node test/test-bitcoinjs-lib.js
 bitcoinjs-lib 'testRandomAddress' ok
 ```
 
-### test-httpServer.js
+### test-http-server.js
 ```
-node test/test-httpServer.js
+node test/test-http-server.js
 ```
 
 http://localhost:9615/?index=668&debug=true
