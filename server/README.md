@@ -1,5 +1,7 @@
 # Directoryjs - Server
 
+Creating a `directory.io` website, only using server side nodejs (as `directory.io` do)
+
 ## Install nodejs
 
 From [installing nodejs on Debian and Ubuntu](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
