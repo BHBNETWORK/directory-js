@@ -4,7 +4,7 @@ Creating a `directory.io` website, only using server side nodejs (as `directory.
 
 1. Just a nodejs command line tool
 2. A basic nodejs.httpServer
-3. Using `express.js`
+3. Using `express.js` web application framework
 
 ---
 
