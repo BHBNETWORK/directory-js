@@ -27,3 +27,9 @@ npm i -S bigi
 ```
 npm install bitcore-lib
 ```
+
+## Install joi
+
+```
+npm install joi
+```
