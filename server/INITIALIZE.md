@@ -21,3 +21,9 @@ npm install url-parse
 ```
 npm i -S bigi
 ```
+
+## Install bitcore-lib
+
+```
+npm install bitcore-lib
+```
