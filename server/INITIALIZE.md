@@ -10,3 +10,9 @@ to npm intialize this folder (the `package.json` is missing and you want to crea
 ```
 npm install bitcoinjs-lib
 ```
+
+## Install url-parse
+
+```
+npm install url-parse
+```
