@@ -2,7 +2,7 @@
 
 # Install nodejs
 
-From https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
+From [installing nodejs on Debian and Ubuntu](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
 
 ```
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
