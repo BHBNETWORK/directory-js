@@ -2,6 +2,7 @@ const assert = require('assert');
 const bitcoin = require('bitcoinjs-lib');
 const BigInteger = require('bigi');
 
+// eslint-disable-next-line no-unused-vars
 const newBI = function (i) {
 	return BigInteger.valueOf(i);
 };
