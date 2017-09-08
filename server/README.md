@@ -6,6 +6,8 @@ Creating a `directory.io` website, only using server side nodejs (as `directory.
 2. A basic nodejs.httpServer
 3. Using `express.js`
 
+---
+
 * [INITIALIZE](INITIALIZE.md)
 * [INSTALL](INSTALL.md)
 * [TEST](TEST.md)
