@@ -1,5 +1,4 @@
-# directoryjs
-directoryjs
+# Directoryjs
 
 # Install nodejs
 
@@ -14,13 +13,20 @@ sudo apt-get install -y nodejs
 sudo apt-get install -y build-essential
 ```
 
-# Install bitcoinjs-lib
+# Server
 
 ```
-npm install --safe bitcoinjs-lib
+cd server
+npm init --y
 ```
 
-# Install XO
+## Install bitcoinjs-lib
+
+```
+npm install bitcoinjs-lib
+```
+
+##  Install XO
 
 ```
  sudo npm install --global xo
