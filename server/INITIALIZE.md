@@ -1,5 +1,4 @@
-
-# Initialize
+# Directoryjs - Server - Initialize
 
 to npm intialize this folder (the `package.json` is missing and you want to create it)
 
@@ -15,4 +14,10 @@ npm install bitcoinjs-lib
 
 ```
 npm install url-parse
+```
+
+## Install bigi
+
+```
+npm i -S bigi
 ```
