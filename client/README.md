@@ -2,7 +2,6 @@
 
 Creating a directory.io website, just serving a `static` website
 
-
 ## TODO
 
 * Install bower
