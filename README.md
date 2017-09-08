@@ -15,10 +15,13 @@ sudo apt-get install -y build-essential
 
 # Server
 
+
 ```
 cd server
-npm init --y
+npm install
 ```
+
+(the `server` folder was initialized with `npm init --y`)
 
 ## Install bitcoinjs-lib
 
