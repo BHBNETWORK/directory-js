@@ -1,7 +1,6 @@
 # Directoryjs
 
-Learning `JavaScript` and `nodejs` creating a `Bitcoin` related project.
-Inspired by http://directory.io
+Learning `Bitcoin` programming with `JavaScript `and `nodejs` creating an inspired by http://directory.io project.
 
 * [Server](server/README.md)
 * [Client](client/README.md)
