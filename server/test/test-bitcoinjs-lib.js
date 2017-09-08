@@ -15,7 +15,7 @@ const testRandomAddress = function () {
 	var address = keyPair.getAddress()
 
 	assert.strictEqual(address, '1F5VhMHukdnUES9kfXqzPzMeF1GPHKiF64')
-	console.log ("bye bye");
+	console.log ("bitcoinjs-lib 'testRandomAddress' ok");
 }
 
 

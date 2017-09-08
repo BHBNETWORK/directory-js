@@ -25,3 +25,10 @@ sudo apt-get install -y build-essential
 cd server
 npm install
 ```
+
+# Test
+
+```
+node test/test-bitcoinjs-lib.js
+bitcoinjs-lib 'testRandomAddress' ok
+```
