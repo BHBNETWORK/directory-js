@@ -28,7 +28,24 @@ npm install
 
 ## Test
 
+### test-bitcoinjs-lib.js
 ```
 node test/test-bitcoinjs-lib.js
 bitcoinjs-lib 'testRandomAddress' ok
+```
+
+### test-httpServer.js
+```
+node test/test-httpServer.js
+```
+
+http://localhost:9615/?index=668&debug=true
+
+```
+curl "http://localhost:9615/?index=668&debug=true"
+url-parse:
+{
+        "index": "668",
+        "debug": "true"
+}
 ```
