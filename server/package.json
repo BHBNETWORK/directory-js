@@ -15,5 +15,14 @@
   "dependencies": {
     "bitcoinjs-lib": "^3.1.1",
     "url-parse": "^1.1.9"
+  },
+  "xo": {
+    "esnext": true,
+    "space": false,
+    "rules": {},
+    "envs": [
+      "browser",
+      "node"
+    ]
   }
 }
