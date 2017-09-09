@@ -53,14 +53,14 @@ readInput((err, crudedata) => {
 
 		const bnOne = bitcore.crypto.BN.fromString('1');
 		const bnBegin = bitcore.crypto.BN.fromString(aInput.offset);
-		const bnDelta = new bitcore.crypto.BN (aInput.delta);
-		const bnEnd = bnBegin.add (bnDelta);
-		console.log ({bnEnd:bnEnd.toString ()});
+		const bnDelta = new bitcore.crypto.BN(aInput.delta);
+		const bnEnd = bnBegin.add(bnDelta);
+		console.log({bnEnd: bnEnd.toString()});
 		let bnIter = bitcore.crypto.BN.fromString(aInput.offset);
-		let results = [];
-		for (; bnIter.toString () !== bnEnd.toString (); bnIter = bnIter.add (bnOne)){
-			results.push (createAddressFromIndex (bnIter.toString ()));
+		const results = [];
+		for (; bnIter.toString() !== bnEnd.toString(); bnIter = bnIter.add(bnOne)) {
+			results.push(createAddressFromIndex(bnIter.toString()));
 		}
-		console.log (results);
+		console.log(results);
 	}
 });
