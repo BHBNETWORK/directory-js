@@ -43,15 +43,24 @@ readInput((err, crudedata) => {
 		throw (err);
 	}	else {
 		const aInput = JSON.parse(crudedata.toString());
-		console.log(aInput);
+
 		const schema = {
 			offset: joi.string().required(),
 			delta: joi.number().required().integer().min(1).max(256)
 		};
 		const joiResult = joi.validate(aInput, schema);
 		assert.strictEqual(joiResult.error, null);
-		console.log(joiResult);
-		const aElement = createAddressFromIndex(aInput.offset);
-		console.log({aElement});
+
+		const bnOne = bitcore.crypto.BN.fromString('1');
+		const bnBegin = bitcore.crypto.BN.fromString(aInput.offset);
+		const bnDelta = new bitcore.crypto.BN (aInput.delta);
+		const bnEnd = bnBegin.add (bnDelta);
+		console.log ({bnEnd:bnEnd.toString ()});
+		let bnIter = bitcore.crypto.BN.fromString(aInput.offset);
+		let results = [];
+		for (; bnIter.toString () !== bnEnd.toString (); bnIter = bnIter.add (bnOne)){
+			results.push (createAddressFromIndex (bnIter.toString ()));
+		}
+		console.log (results);
 	}
 });
