@@ -12,7 +12,33 @@ const readInput = function (theCompletion) {
 	return readFile(kInputs[0], theCompletion);
 };
 
+const createAddressFromIndex = function (theStringIndex){
+	const aBN = bitcore.crypto.BN.fromString(theStringIndex);
+
+	// Extended
+	const aPrivateKeyExtended = new bitcore.PrivateKey({bn: aBN, compressed: false, network: 'livenet'});
+	const aWIFExtended = aPrivateKeyExtended.toWIF();
+	const aAddressExtended = aPrivateKeyExtended.toAddress();
+
+	// Compressed
+	const aPrivateKeyCompressed = new bitcore.PrivateKey({bn: aBN, compressed: true, network: 'livenet'});
+	const aWIFCompressed = aPrivateKeyCompressed.toWIF(); // eslint-disable-line no-unused-vars
+	const aAddressCompressed = aPrivateKeyCompressed.toAddress();
+
+	const aCalculatedValue = {
+		index: theStringIndex,
+		wif: aWIFExtended.toString(),
+		address: {
+			extended: aAddressExtended.toString(),
+			compressed: aAddressCompressed.toString()
+		}
+	};
+	return aCalculatedValue;
+};
+
 readInput((err, crudedata) => {
+// test:
+// echo '{"offset":"123", "delta": 256}' | node cmd-dump-keys.js
 	if (err) {
 		throw (err);
 	}	else {
@@ -24,5 +50,8 @@ readInput((err, crudedata) => {
 		};
 		const joiResult = joi.validate(aInput, schema);
 		assert.strictEqual(joiResult.error, null);
+		console.log (joiResult);
+		const aElement = createAddressFromIndex (aInput.offset);
+		console.log ({aElement});
 	}
 });
