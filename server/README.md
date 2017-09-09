@@ -16,7 +16,7 @@ Creating a `directory.io` website, only using server side nodejs (as `directory.
 
 ## Command line tool
 
-```
+``` c
 $ echo '{"offset":"123", "delta": 3}' | node cmd-dump-keys.js | jq
 [
   {
