@@ -8,7 +8,7 @@ const readFile = function (thePath, theCompletion) {
 };
 
 const readInput = function (theCompletion) {
-	const kInputs = ['/dev/stdin', 'data/solidity_compile.input.json'];
+	const kInputs = ['/dev/stdin'];
 	return readFile(kInputs[0], theCompletion);
 };
 
