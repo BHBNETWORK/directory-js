@@ -2,9 +2,9 @@
 
 Creating a `directory.io` website, only using server side nodejs (as `directory.io` do) in 3 different way:
 
-1. Just a nodejs command line tool
-2. A basic nodejs.httpServer
-3. Using `express.js` web application framework
+1. [Command line tool](#command-line-tool) (DONE)
+2. A basic nodejs.httpServer (TODO)
+3. Using `express.js` web application framework (TODO)
 
 ---
 
@@ -14,7 +14,7 @@ Creating a `directory.io` website, only using server side nodejs (as `directory.
 
 ---
 
-## cmd-dump-keys
+## Command line tool
 
 ```
  echo '{"offset":"123", "delta": 3}' | node cmd-dump-keys.js 
