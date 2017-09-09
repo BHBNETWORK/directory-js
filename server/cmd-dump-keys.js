@@ -12,7 +12,7 @@ const readInput = function (theCompletion) {
 	return readFile(kInputs[0], theCompletion);
 };
 
-const createAddressFromIndex = function (theStringIndex){
+const createAddressFromIndex = function (theStringIndex) {
 	const aBN = bitcore.crypto.BN.fromString(theStringIndex);
 
 	// Extended
@@ -37,7 +37,7 @@ const createAddressFromIndex = function (theStringIndex){
 };
 
 readInput((err, crudedata) => {
-// test:
+// Test:
 // echo '{"offset":"123", "delta": 256}' | node cmd-dump-keys.js
 	if (err) {
 		throw (err);
@@ -50,8 +50,8 @@ readInput((err, crudedata) => {
 		};
 		const joiResult = joi.validate(aInput, schema);
 		assert.strictEqual(joiResult.error, null);
-		console.log (joiResult);
-		const aElement = createAddressFromIndex (aInput.offset);
-		console.log ({aElement});
+		console.log(joiResult);
+		const aElement = createAddressFromIndex(aInput.offset);
+		console.log({aElement});
 	}
 });
