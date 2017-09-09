@@ -20,12 +20,15 @@ const createAddressFromBNIndex = function (theBNIndex) {
 
 	// Compressed
 	const aPrivateKeyCompressed = new bitcore.PrivateKey({bn: theBNIndex, compressed: true, network: 'livenet'});
-	const aWIFCompressed = aPrivateKeyCompressed.toWIF(); // eslint-disable-line no-unused-vars
+	const aWIFCompressed = aPrivateKeyCompressed.toWIF();
 	const aAddressCompressed = aPrivateKeyCompressed.toAddress();
 
 	const aCalculatedValue = {
 		index: theBNIndex.toString(),
-		wif: aWIFExtended.toString(),
+		wif: {
+			extended: aWIFExtended.toString(),
+			compressed: aWIFCompressed.toString()
+		},
 		address: {
 			extended: aAddressExtended.toString(),
 			compressed: aAddressCompressed.toString()
