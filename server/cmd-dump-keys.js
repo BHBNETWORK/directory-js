@@ -12,21 +12,19 @@ const readInput = function (theCompletion) {
 	return readFile(kInputs[0], theCompletion);
 };
 
-const createAddressFromIndex = function (theStringIndex) {
-	const aBN = bitcore.crypto.BN.fromString(theStringIndex);
-
+const createAddressFromBNIndex = function (theBNIndex) {
 	// Extended
-	const aPrivateKeyExtended = new bitcore.PrivateKey({bn: aBN, compressed: false, network: 'livenet'});
+	const aPrivateKeyExtended = new bitcore.PrivateKey({bn: theBNIndex, compressed: false, network: 'livenet'});
 	const aWIFExtended = aPrivateKeyExtended.toWIF();
 	const aAddressExtended = aPrivateKeyExtended.toAddress();
 
 	// Compressed
-	const aPrivateKeyCompressed = new bitcore.PrivateKey({bn: aBN, compressed: true, network: 'livenet'});
+	const aPrivateKeyCompressed = new bitcore.PrivateKey({bn: theBNIndex, compressed: true, network: 'livenet'});
 	const aWIFCompressed = aPrivateKeyCompressed.toWIF(); // eslint-disable-line no-unused-vars
 	const aAddressCompressed = aPrivateKeyCompressed.toAddress();
 
 	const aCalculatedValue = {
-		index: theStringIndex,
+		index: theBNIndex.toString(),
 		wif: aWIFExtended.toString(),
 		address: {
 			extended: aAddressExtended.toString(),
@@ -59,7 +57,7 @@ readInput((err, crudedata) => {
 		let bnIter = bitcore.crypto.BN.fromString(aInput.offset);
 		const results = [];
 		for (; bnIter.toString() !== bnEnd.toString(); bnIter = bnIter.add(bnOne)) {
-			results.push(createAddressFromIndex(bnIter.toString()));
+			results.push(createAddressFromBNIndex(bnIter));
 		}
 		console.log(results);
 	}
