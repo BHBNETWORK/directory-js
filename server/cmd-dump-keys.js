@@ -59,7 +59,7 @@ readInput((err, crudedata) => {
 
 		let bnIter = bitcore.crypto.BN.fromString(aInput.offset);
 		const results = [];
-		for (; bnIter.toString() !== bnEnd.toString(); bnIter = bnIter.add(bnOne)) {
+		for (; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
 			results.push(createAddressFromBNIndex(bnIter));
 		}
 		console.log(JSON.stringify(results));
