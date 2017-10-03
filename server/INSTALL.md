@@ -1,4 +1,4 @@
-# Directoryjs - Server - Install
+# Directory-js - Server - Install
 
 ## Install nodejs
 

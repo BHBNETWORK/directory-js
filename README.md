@@ -1,4 +1,4 @@
-# Directoryjs
+# Directory-js
 
 Learning `Bitcoin` programming with `JavaScript `and `nodejs` creating an inspired by http://directory.io project.
 

@@ -1,4 +1,4 @@
-# Directoryjs - Server
+# Directory-js - Server
 
 Creating a `directory.io` website, only using server side nodejs (as `directory.io` do) in 3 different way:
 

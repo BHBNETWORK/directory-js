@@ -1,4 +1,4 @@
-# Directoryjs - Server - Initialize
+# Directory-js - Server - Initialize
 
 to npm intialize this folder (the `package.json` is missing and you want to create it)
 

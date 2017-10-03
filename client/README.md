@@ -1,4 +1,4 @@
-# Directoryjs - Client
+# Directory-js - Client
 
 Creating a directory.io website, just serving a `static` website
 
@@ -6,4 +6,4 @@ Creating a directory.io website, just serving a `static` website
 
 * Install bower
 * Install bitcore-lib `bower install bitcore-lib`
-* Getting inspired by [server/test/test-bitcore.js](https://github.com/BHBNETWORK/directoryjs/blob/master/server/test/test-bitcore.js) create a static webpage equivalent to http://directory.io
+* Getting inspired by [server/test/test-bitcore.js](https://github.com/BHBNETWORK/directory-js/blob/master/server/test/test-bitcore.js) create a static webpage equivalent to http://directory.io

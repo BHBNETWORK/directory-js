@@ -1,4 +1,4 @@
-# Directoryjs - Server - Test
+# Directory-js - Server - Test
 
 ## test-bitcoinjs-lib.js
 ```
