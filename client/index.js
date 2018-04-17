@@ -63,10 +63,16 @@ let gController = null;
 
 			self.show = () => {
 				const bnOne = bitcore.crypto.BN.fromString('1');
-				const aFullAddress = self.util.createAddressFromBNIndex(bnOne);
-				console.log(aFullAddress);
+				const bnBegin = bitcore.crypto.BN.fromString('1');
+				const bnDelta = bitcore.crypto.BN.fromString('64');
+				const bnEnd = bnBegin.add(bnDelta);
+
+				const results = [];
+				for (let bnIter = bnOne; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
+					results.push(self.util.createAddressFromBNIndex(bnIter));
+				}
+				const aContent = self.util.createElement('pre', {textContent: JSON.stringify(results, null, 8)}, ['json']);
 				const aDOMTableWrapper = document.getElementById('tableWrapper');
-				const aContent = self.util.createElement('pre', {textContent: JSON.stringify(aFullAddress, null, 8)}, ['json']);
 				aDOMTableWrapper.appendChild(aContent);
 			};
 		};
