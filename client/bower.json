@@ -1,0 +1,21 @@
+{
+  "name": "directory-js",
+  "homepage": "https://github.com/BHBNETWORK/directory-js",
+  "authors": [
+    "Isidoro Ghezzi <isidoro.ghezzi@icloud.com>"
+  ],
+  "description": "",
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bitcore-lib": "^0.15.0"
+  }
+}

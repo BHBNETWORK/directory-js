@@ -1,0 +1,97 @@
+/*
+	Lissone (MB) Italy
+	Sat Nov 30 21:48:03 CET 2013
+	Copyright 2013, 2014, 2015, 2016, 2017, 2018 Isidoro Ghezzi
+	isidoro.ghezzi@icloud.it
+*/
+
+body{
+	background: lightgray;
+	margin: 0;
+	padding: 0;
+	font-size: smaller;
+	font-family: monospace
+}
+h1, h2{
+	color: black;
+	text-align: center;
+}
+.container{
+	margin: 0.25em;
+	padding: 0;
+	background: white;
+	color: black;
+	text-align: center;
+}
+
+.date{
+	text-align: center;
+}
+
+.bold{
+	font-weight: bold;
+}
+
+.normal{
+	color: black;
+	background: white;
+}
+
+.busy{
+	color: black;
+	background: lightgray;
+}
+
+.ig_button{
+	margin: 1em;
+	border-radius:8px;
+	border: 2px solid black;
+	padding: 0.25em;
+	margin: auto;
+	text-align: center;
+	font-weight: bold;
+	width: 10em;
+}
+
+.markets ol li ul, ol li ul li{
+	margin-left: 0;
+	padding-left: 0;
+}
+
+.value{
+	padding-left: 1em;
+}
+
+.result{
+	font-family: monospace;
+	white-space: pre;
+	font-weight: bold;
+}
+
+.wrap-result{
+	margin: 1em;
+}
+.input_text{
+	text-align: right;
+	margin: 1em;
+}
+
+.footer{
+	margin-left: -1em;
+	margin-right: -1em;
+	background: lightgray;
+}
+
+.footer div{
+	padding: 0.25em;
+}
+
+.bitcoin{
+	font-size: smaller;
+	color: gray;
+}
+
+.json{
+	text-align: left;
+	font-family: monospace;
+}
