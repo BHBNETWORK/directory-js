@@ -1,31 +1,32 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bigi": "^1.4.2",
-    "bitcoinjs-lib": "^3.1.1",
-    "bitcore-lib": "^0.14.0",
-    "joi": "^10.6.0",
-    "url-parse": "^1.1.9"
-  },
-  "xo": {
-    "esnext": true,
-    "space": false,
-    "rules": {},
-    "envs": [
-      "browser",
-      "node"
-    ]
-  }
+	"name": "server",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"directories": {
+		"test": "test"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"bigi": "^1.4.2",
+		"bitcoinjs-lib": "^3.1.1",
+		"bitcore-lib": "^0.14.0",
+		"joi": "^10.6.0",
+		"url-parse": "^1.1.9"
+	},
+	"xo": {
+		"esnext": true,
+		"space": false,
+		"rules": {},
+	"semicolon": true,
+		"envs": [
+			"browser",
+			"node"
+		]
+	}
 }
