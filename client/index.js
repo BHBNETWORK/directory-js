@@ -60,6 +60,36 @@ let gController = null;
 					return aCalculatedValue;
 				}
 			};
+			self.model = {
+				page: null // BN of current page.
+			};
+			self.showTable = () => {
+				const bnOne = bitcore.crypto.BN.fromString('1');
+				const bnDelta = bitcore.crypto.BN.fromString('64');
+				const bnPage = self.model.page.sub(bnOne);
+				const bnBegin = bnPage.mul(bnDelta).add(bnOne);
+				const bnEnd = bnBegin.add(bnDelta);
+
+				const aPrevRef = self.util.createElement('span', {textContent: 'Prev', onclick() {
+					self.model.page = self.model.page.sub(bnOne);
+					setTimeout(self.showTable, 0);
+				}}, ['ig_button', 'normal']);
+				const aNextRef = self.util.createElement('span', {textContent: 'Next', onclick() {
+					self.model.page = self.model.page.add(bnOne);
+					setTimeout(self.showTable, 0);
+				}}, ['ig_button', 'normal']);
+				const aDOMTableWrapper = document.getElementById('tableWrapper');
+				aDOMTableWrapper.innerHTML = null;
+				[aPrevRef, aNextRef].forEach(theDOM => {
+					aDOMTableWrapper.appendChild(theDOM);
+				});
+				const results = [];
+				for (let bnIter = bnBegin; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
+					results.push(self.util.createAddressFromBNIndex(bnIter));
+				}
+				const aContent = self.util.createElement('pre', {textContent: JSON.stringify(results, null, 8)}, ['json']);
+				aDOMTableWrapper.appendChild(aContent);
+			};
 
 			self.show = () => {
 				const url = new URL(location);
@@ -70,25 +100,8 @@ let gController = null;
 				if (aPageString === null) {
 					aPageString = '1';
 				}
-				const bnOne = bitcore.crypto.BN.fromString('1');
-				const bnDelta = bitcore.crypto.BN.fromString('64');
-				const bnPage = bitcore.crypto.BN.fromString(aPageString).sub(bnOne);
-				const bnBegin = bnPage.mul(bnDelta).add(bnOne);
-				const bnEnd = bnBegin.add(bnDelta);
-
-				const aPrevRef = self.util.createElement('a', {textContent: 'Prev', href: path + '?page=' + bnPage.toString()}, ['json']);
-				const aSeparetor = self.util.createElement('span', {textContent: '|'});
-				const aNextRef = self.util.createElement('a', {textContent: 'Next', href: path + '?page=' + bnPage.add(bnOne).add(bnOne).toString()}, ['json']);
-				const aDOMTableWrapper = document.getElementById('tableWrapper');
-				[aPrevRef, aSeparetor, aNextRef].forEach(theDOM => {
-					aDOMTableWrapper.appendChild(theDOM);
-				});
-				const results = [];
-				for (let bnIter = bnBegin; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
-					results.push(self.util.createAddressFromBNIndex(bnIter));
-				}
-				const aContent = self.util.createElement('pre', {textContent: JSON.stringify(results, null, 8)}, ['json']);
-				aDOMTableWrapper.appendChild(aContent);
+				self.model.page = bitcore.crypto.BN.fromString(aPageString);
+				setTimeout(self.showTable, 0);
 			};
 		};
 		gController = new ClassController(new Date());

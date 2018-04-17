@@ -43,11 +43,10 @@ h1, h2{
 }
 
 .ig_button{
-	margin: 1em;
+	margin: 0.5em;
 	border-radius:8px;
 	border: 2px solid black;
-	padding: 0.25em;
-	margin: auto;
+	padding: 0.5em;
 	text-align: center;
 	font-weight: bold;
 	width: 10em;
