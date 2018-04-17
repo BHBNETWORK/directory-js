@@ -76,11 +76,11 @@ let gController = null;
 				const bnBegin = bnPage.mul(bnDelta).add(bnOne);
 				const bnEnd = bnBegin.add(bnDelta);
 				const aDOMPageNumber = self.util.createElement('h2', {textContent: self.model.bnPage.toString ()});
-				const aPrevRef = self.util.createElement('span', {textContent: 'Prev', onclick: self.onClickButton(bnOne.neg())}, ['ig_button', 'normal']);
-				const aNextRef = self.util.createElement('span', {textContent: 'Next', onclick: self.onClickButton(bnOne)}, ['ig_button', 'normal']);
+				const aPrevButton = self.util.createElement('span', {textContent: 'Prev', onclick: self.onClickButton(bnOne.neg())}, ['ig_button', 'normal']);
+				const aNextButton = self.util.createElement('span', {textContent: 'Next', onclick: self.onClickButton(bnOne)}, ['ig_button', 'normal']);
 				const aDOMTableWrapper = document.getElementById('tableWrapper');
 				aDOMTableWrapper.innerHTML = null;
-				[aDOMPageNumber, aPrevRef, aNextRef].forEach(theDOM => {
+				[aDOMPageNumber, aPrevButton, aNextButton].forEach(theDOM => {
 					aDOMTableWrapper.appendChild(theDOM);
 				});
 				const results = [];
