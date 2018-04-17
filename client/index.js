@@ -61,23 +61,22 @@ let gController = null;
 				}
 			};
 			self.model = {
-				page: null // BN of current page.
+				bnPage: null // BN of current page.
+			};
+			self.onClickButton = theIncrement => {
+				return function () {
+					self.model.bnPage = self.model.bnPage.add(theIncrement);
+					setTimeout(self.showTable, 0);
+				};
 			};
 			self.showTable = () => {
 				const bnOne = bitcore.crypto.BN.fromString('1');
 				const bnDelta = bitcore.crypto.BN.fromString('64');
-				const bnPage = self.model.page.sub(bnOne);
+				const bnPage = self.model.bnPage.sub(bnOne);
 				const bnBegin = bnPage.mul(bnDelta).add(bnOne);
 				const bnEnd = bnBegin.add(bnDelta);
-
-				const aPrevRef = self.util.createElement('span', {textContent: 'Prev', onclick() {
-					self.model.page = self.model.page.sub(bnOne);
-					setTimeout(self.showTable, 0);
-				}}, ['ig_button', 'normal']);
-				const aNextRef = self.util.createElement('span', {textContent: 'Next', onclick() {
-					self.model.page = self.model.page.add(bnOne);
-					setTimeout(self.showTable, 0);
-				}}, ['ig_button', 'normal']);
+				const aPrevRef = self.util.createElement('span', {textContent: 'Prev', onclick: self.onClickButton(bnOne.neg())}, ['ig_button', 'normal']);
+				const aNextRef = self.util.createElement('span', {textContent: 'Next', onclick: self.onClickButton(bnOne)}, ['ig_button', 'normal']);
 				const aDOMTableWrapper = document.getElementById('tableWrapper');
 				aDOMTableWrapper.innerHTML = null;
 				[aPrevRef, aNextRef].forEach(theDOM => {
@@ -100,7 +99,7 @@ let gController = null;
 				if (aPageString === null) {
 					aPageString = '1';
 				}
-				self.model.page = bitcore.crypto.BN.fromString(aPageString);
+				self.model.bnPage = bitcore.crypto.BN.fromString(aPageString);
 				setTimeout(self.showTable, 0);
 			};
 		};
