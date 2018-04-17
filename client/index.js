@@ -62,17 +62,32 @@ let gController = null;
 			};
 
 			self.show = () => {
+				const url = new URL(location);
+				const path = url.origin + url.pathname;
+				console.log(path);
+				const params = url.searchParams;
+				let aPageString = params.get('page');
+				if (aPageString === null) {
+					aPageString = '1';
+				}
 				const bnOne = bitcore.crypto.BN.fromString('1');
-				const bnBegin = bitcore.crypto.BN.fromString('1');
 				const bnDelta = bitcore.crypto.BN.fromString('64');
+				const bnPage = bitcore.crypto.BN.fromString(aPageString).sub(bnOne);
+				const bnBegin = bnPage.mul(bnDelta).add(bnOne);
 				const bnEnd = bnBegin.add(bnDelta);
 
+				const aPrevRef = self.util.createElement('a', {textContent: 'Prev', href: path + '?page=' + bnPage.toString()}, ['json']);
+				const aSeparetor = self.util.createElement('span', {textContent: '|'});
+				const aNextRef = self.util.createElement('a', {textContent: 'Next', href: path + '?page=' + bnPage.add(bnOne).add(bnOne).toString()}, ['json']);
+				const aDOMTableWrapper = document.getElementById('tableWrapper');
+				[aPrevRef, aSeparetor, aNextRef].forEach(theDOM => {
+					aDOMTableWrapper.appendChild(theDOM);
+				});
 				const results = [];
-				for (let bnIter = bnOne; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
+				for (let bnIter = bnBegin; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
 					results.push(self.util.createAddressFromBNIndex(bnIter));
 				}
 				const aContent = self.util.createElement('pre', {textContent: JSON.stringify(results, null, 8)}, ['json']);
-				const aDOMTableWrapper = document.getElementById('tableWrapper');
 				aDOMTableWrapper.appendChild(aContent);
 			};
 		};
