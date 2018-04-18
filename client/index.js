@@ -104,7 +104,8 @@ let gController = null;
 				const bnEnd = bnBegin.add(bnDelta);
 				const bnMaxNumberOfIndex = bitcore.crypto.BN.fromString('115792089237316195423570985008687907852837564279074904382605163141518161494336');
 				const bnMaxPages = bnMaxNumberOfIndex.div(bnDelta);
-				const aDOMPageNumber = self.util.createElement('h2', {textContent: 'Page ' + self.model.bnPage.toString() + ' of ' + bnMaxPages.toString()});
+				const aDOMHeader = self.util.createElement('h2', {textContent: 'Bitcoin private key database'}, ['left']);
+				const aDOMPageNumber = self.util.createElement('h3', {textContent: 'Page ' + self.model.bnPage.toString() + ' out of ' + bnMaxPages.toString()});
 				const aDOMNumberOfIndex = self.util.createElement('h3', {textContent: 'Total: ' + bnMaxNumberOfIndex.toString()});
 				const aPrevButton = self.util.createElement('span', {textContent: 'Previous'}, ['ig_button', 'normal']);
 				aPrevButton.addEventListener('click', self.onClickButton(aPrevButton, bnOne.neg()));
@@ -113,7 +114,7 @@ let gController = null;
 				const aDOMTableWrapper = document.getElementById('tableWrapper');
 				aDOMTableWrapper.innerHTML = null;
 				const aDOMContent = self.util.createElement('table');
-				self.util.appendChildren(aDOMTableWrapper, [aDOMPageNumber, aDOMNumberOfIndex, aPrevButton, aNextButton]);
+				self.util.appendChildren(aDOMTableWrapper, [aDOMHeader, aDOMPageNumber, aDOMNumberOfIndex, aPrevButton, aNextButton]);
 				setTimeout(() => {
 					const bn = [];
 					for (let bnIter = bnBegin; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
@@ -143,10 +144,10 @@ let gController = null;
 					[aPrevButton, aNextButton].forEach(theButton => {
 						self.buttonEnable(theButton);
 					});
+					const aDOMDonation = self.util.createElement('div', {textContent: 'It took a lot of computing power to generate this database. Donations welcome: 1ALL13199J1n4cDQ276We3wctwr11xB8Rn'}, ['crono']);
 					const aEndDate = new Date();
-					const aDOMCrono = self.util.createElement('div', {textContent: aEndDate - aStartDate}, ['crono']);
-					aDOMTableWrapper.appendChild(aDOMCrono);
-					aDOMTableWrapper.appendChild(aDOMContent);
+					const aDOMCrono = self.util.createElement('div', {textContent: 'ticks: ' + (aEndDate - aStartDate)}, ['crono']);
+					self.util.appendChildren (aDOMTableWrapper, [aDOMCrono, aDOMContent, aDOMDonation]);
 				}, 0);
 			};
 
