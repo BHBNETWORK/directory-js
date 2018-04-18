@@ -69,6 +69,11 @@ let gController = null;
 						}
 					};
 					return aCalculatedValue;
+				},
+				appendChildren (theDOM, theChildren){
+					theChildren.forEach (theChild =>{
+						theDOM.appendChild (theChild);
+					});
 				}
 			};
 			self.buttonDisable = function (theButton) {
@@ -107,9 +112,7 @@ let gController = null;
 				const aDOMTableWrapper = document.getElementById('tableWrapper');
 				aDOMTableWrapper.innerHTML = null;
 				const aDOMContent = self.util.createElement('table');
-				[aDOMPageNumber, aDOMNumberOfIndex, aPrevButton, aNextButton, aDOMContent].forEach(theDOM => {
-					aDOMTableWrapper.appendChild(theDOM);
-				});
+				self.util.appendChildren (aDOMTableWrapper, [aDOMPageNumber, aDOMNumberOfIndex, aPrevButton, aNextButton, aDOMContent]);
 				setTimeout(() => {
 					const bn = [];
 					for (let bnIter = bnBegin; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
@@ -125,22 +128,16 @@ let gController = null;
 							self.util.createElement('td', {textContent: JSON.stringify(element.address, null, 8)}, ['preformatted'])
 						];
 						const aDOMTr = self.util.createElement('tr');
-						aDOMTds.forEach(aDOMTd => {
-							aDOMTr.appendChild(aDOMTd);
-						});
+						self.util.appendChildren (aDOMTr, aDOMTds);
 						return aDOMTr;
 					});
 					const aDOMThs = ['index', 'wif', 'address'].map(head => {
 						return self.util.createElement('th', {textContent: head});
 					});
 					const aDOMTr = self.util.createElement('tr');
-					aDOMThs.forEach(aDOMTh => {
-						aDOMTr.appendChild(aDOMTh);
-					});
+					self.util.appendChildren (aDOMTr, aDOMThs);
 					aDOMContent.appendChild(aDOMTr);
-					aDOMTrs.forEach(aDOMTr => {
-						aDOMContent.appendChild(aDOMTr);
-					});
+					self.util.appendChildren (aDOMContent, aDOMTrs);
 					// ADOMContent.innerHTML = JSON.stringify(results, null, 8);
 					[aPrevButton, aNextButton].forEach(theButton => {
 						self.buttonEnable(theButton);
