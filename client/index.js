@@ -123,21 +123,23 @@ let gController = null;
 					const results = bn.map(theIndex => {
 						return self.util.createAddressFromBNIndex(theIndex);
 					});
-					const buildField = function (element) {
-						return 'extended:\t' + element.extended + '\ncompressed:\t' + element.compressed;
+					const buildField = function (element, bool_compressed) {
+					// https://blockchair.com/bitcoin/address/1CK6KHY6MHgYvmRQ4PAafKYDrg1ejbH1cE
+						const fieldName = ['extended', 'compressed'];
+						return 'wif:\t' + element.wif[fieldName[+bool_compressed]] + '\naddress:\t' + element.address[fieldName[+bool_compressed]];
 					};
 					const styles = ['background-darkgray', 'background-gray', 'background-lightgray'];
 					const aDOMTrs = results.map((element, index) => {
 						const aDOMTds = [
 							self.util.createElement('td', {textContent: element.index}, ['center']),
-							self.util.createElement('td', {textContent: buildField(element.wif)}, ['preformatted']),
-							self.util.createElement('td', {textContent: buildField(element.address)}, ['preformatted'])
+							self.util.createElement('td', {textContent: buildField(element, false)}, ['preformatted']),
+							self.util.createElement('td', {textContent: buildField(element, true)}, ['preformatted'])
 						];
 						const aDOMTr = self.util.createElement('tr', null, [styles [index%(styles.length)]]);
 						self.util.appendChildren(aDOMTr, aDOMTds);
 						return aDOMTr;
 					});
-					const aDOMThs = ['index', 'wif', 'address'].map(head => {
+					const aDOMThs = ['index', 'extended', 'compressed'].map(head => {
 						return self.util.createElement('th', {textContent: head});
 					});
 					const aDOMTr = self.util.createElement('tr');
