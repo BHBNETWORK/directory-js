@@ -94,3 +94,15 @@ h1, h2{
 	text-align: left;
 	font-family: monospace;
 }
+
+pre{
+	text-align:left;
+}
+.preformatted {
+    font-family: monospace;
+    white-space: pre;
+    text-align: left;
+}
+.left{
+	text-align: left;
+}

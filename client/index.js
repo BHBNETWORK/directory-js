@@ -106,7 +106,7 @@ let gController = null;
 				aNextButton.addEventListener('click', self.onClickButton(aNextButton, bnOne));
 				const aDOMTableWrapper = document.getElementById('tableWrapper');
 				aDOMTableWrapper.innerHTML = null;
-				const aDOMContent = self.util.createElement('pre', null, ['json']);
+				const aDOMContent = self.util.createElement('table');
 				[aDOMPageNumber, aDOMNumberOfIndex, aPrevButton, aNextButton, aDOMContent].forEach(theDOM => {
 					aDOMTableWrapper.appendChild(theDOM);
 				});
@@ -118,7 +118,30 @@ let gController = null;
 					const results = bn.map(theIndex => {
 						return self.util.createAddressFromBNIndex(theIndex);
 					});
-					aDOMContent.innerHTML = JSON.stringify(results, null, 8);
+					const aDOMTrs = results.map(element => {
+						const aDOMTds = [
+							self.util.createElement('td', {textContent: element.index}),
+							self.util.createElement('td', {textContent: JSON.stringify(element.wif, null, 8)}, ['preformatted']),
+							self.util.createElement('td', {textContent: JSON.stringify(element.address, null, 8)}, ['preformatted'])
+						];
+						const aDOMTr = self.util.createElement('tr');
+						aDOMTds.forEach(aDOMTd => {
+							aDOMTr.appendChild(aDOMTd);
+						});
+						return aDOMTr;
+					});
+					const aDOMThs = ['index', 'wif', 'address'].map(head => {
+						return self.util.createElement('th', {textContent: head});
+					});
+					const aDOMTr = self.util.createElement('tr');
+					aDOMThs.forEach(aDOMTh => {
+						aDOMTr.appendChild(aDOMTh);
+					});
+					aDOMContent.appendChild(aDOMTr);
+					aDOMTrs.forEach(aDOMTr => {
+						aDOMContent.appendChild(aDOMTr);
+					});
+					// ADOMContent.innerHTML = JSON.stringify(results, null, 8);
 					[aPrevButton, aNextButton].forEach(theButton => {
 						self.buttonEnable(theButton);
 					});
