@@ -123,11 +123,14 @@ let gController = null;
 					const results = bn.map(theIndex => {
 						return self.util.createAddressFromBNIndex(theIndex);
 					});
+					const buildField = function (element) {
+						return 'extended:\t' + element.extended + '\ncompressed:\t' + element.compressed;
+					};
 					const aDOMTrs = results.map(element => {
 						const aDOMTds = [
 							self.util.createElement('td', {textContent: element.index}),
-							self.util.createElement('td', {textContent: JSON.stringify(element.wif, null, 8)}, ['preformatted']),
-							self.util.createElement('td', {textContent: JSON.stringify(element.address, null, 8)}, ['preformatted'])
+							self.util.createElement('td', {textContent: buildField(element.wif)}, ['preformatted']),
+							self.util.createElement('td', {textContent: buildField(element.address)}, ['preformatted'])
 						];
 						const aDOMTr = self.util.createElement('tr');
 						self.util.appendChildren(aDOMTr, aDOMTds);
@@ -147,7 +150,7 @@ let gController = null;
 					const aDOMDonation = self.util.createElement('div', {textContent: 'It took a lot of computing power to generate this database. Donations welcome: 1ALL13199J1n4cDQ276We3wctwr11xB8Rn'}, ['crono']);
 					const aEndDate = new Date();
 					const aDOMCrono = self.util.createElement('div', {textContent: 'ticks: ' + (aEndDate - aStartDate)}, ['crono']);
-					self.util.appendChildren (aDOMTableWrapper, [aDOMCrono, aDOMContent, aDOMDonation]);
+					self.util.appendChildren(aDOMTableWrapper, [aDOMCrono, aDOMContent, aDOMDonation]);
 				}, 0);
 			};
 
