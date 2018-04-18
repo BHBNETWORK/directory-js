@@ -35,6 +35,17 @@ let gController = null;
 					}
 					return ret;
 				},
+				createAddressFromBNIndexOld(theBNIndex) {
+					return {
+						index: theBNIndex.toString(),
+						addresses: [false, true].map(compressed => {
+							const aPrivateKey = new bitcore.PrivateKey({bn: theBNIndex, compressed, network: 'livenet'});
+							const aWIF = aPrivateKey.toWIF();
+							const aAddress = aPrivateKey.toAddress();
+							return {compressed, wif: aWIF.toString(), address: aAddress.toString()};
+						})
+					};
+				},
 				createAddressFromBNIndex(theBNIndex) {
 					// Extended
 					const aPrivateKeyExtended = new bitcore.PrivateKey({bn: theBNIndex, compressed: false, network: 'livenet'});
@@ -95,16 +106,19 @@ let gController = null;
 				aNextButton.addEventListener('click', self.onClickButton(aNextButton, bnOne));
 				const aDOMTableWrapper = document.getElementById('tableWrapper');
 				aDOMTableWrapper.innerHTML = null;
-				[aDOMPageNumber, aDOMNumberOfIndex, aPrevButton, aNextButton].forEach(theDOM => {
+				const aDOMContent = self.util.createElement('pre', null, ['json']);
+				[aDOMPageNumber, aDOMNumberOfIndex, aPrevButton, aNextButton, aDOMContent].forEach(theDOM => {
 					aDOMTableWrapper.appendChild(theDOM);
 				});
 				setTimeout(() => {
-					const results = [];
+					const bn = [];
 					for (let bnIter = bnBegin; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
-						results.push(self.util.createAddressFromBNIndex(bnIter));
+						bn.push(bnIter);
 					}
-					const aContent = self.util.createElement('pre', {textContent: JSON.stringify(results, null, 8)}, ['json']);
-					aDOMTableWrapper.appendChild(aContent);
+					const results = bn.map(theIndex => {
+						return self.util.createAddressFromBNIndex(theIndex);
+					});
+					aDOMContent.innerHTML = JSON.stringify(results, null, 8);
 					[aPrevButton, aNextButton].forEach(theButton => {
 						self.buttonEnable(theButton);
 					});
