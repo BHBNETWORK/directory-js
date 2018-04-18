@@ -126,13 +126,14 @@ let gController = null;
 					const buildField = function (element) {
 						return 'extended:\t' + element.extended + '\ncompressed:\t' + element.compressed;
 					};
-					const aDOMTrs = results.map(element => {
+					const styles = ['background-darkgray', 'background-gray', 'background-lightgray'];
+					const aDOMTrs = results.map((element, index) => {
 						const aDOMTds = [
-							self.util.createElement('td', {textContent: element.index}),
+							self.util.createElement('td', {textContent: element.index}, ['center']),
 							self.util.createElement('td', {textContent: buildField(element.wif)}, ['preformatted']),
 							self.util.createElement('td', {textContent: buildField(element.address)}, ['preformatted'])
 						];
-						const aDOMTr = self.util.createElement('tr');
+						const aDOMTr = self.util.createElement('tr', null, [styles [index%(styles.length)]]);
 						self.util.appendChildren(aDOMTr, aDOMTds);
 						return aDOMTr;
 					});
