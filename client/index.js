@@ -113,7 +113,7 @@ let gController = null;
 				const aDOMTableWrapper = document.getElementById('tableWrapper');
 				aDOMTableWrapper.innerHTML = null;
 				const aDOMContent = self.util.createElement('table');
-				self.util.appendChildren(aDOMTableWrapper, [aDOMPageNumber, aDOMNumberOfIndex, aPrevButton, aNextButton, aDOMContent]);
+				self.util.appendChildren(aDOMTableWrapper, [aDOMPageNumber, aDOMNumberOfIndex, aPrevButton, aNextButton]);
 				setTimeout(() => {
 					const bn = [];
 					for (let bnIter = bnBegin; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
@@ -144,8 +144,9 @@ let gController = null;
 						self.buttonEnable(theButton);
 					});
 					const aEndDate = new Date();
-					const aDOMCrono = self.util.createElement ('div', {textContent: aEndDate - aStartDate});
-					aDOMTableWrapper.appendChild (aDOMCrono);
+					const aDOMCrono = self.util.createElement('div', {textContent: aEndDate - aStartDate}, ['crono']);
+					aDOMTableWrapper.appendChild(aDOMCrono);
+					aDOMTableWrapper.appendChild(aDOMContent);
 				}, 0);
 			};
 
