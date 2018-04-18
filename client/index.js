@@ -96,6 +96,7 @@ let gController = null;
 				};
 			};
 			self.showTable = () => {
+				const aStartDate = new Date();
 				const bnOne = bitcore.crypto.BN.fromString('1');
 				const bnDelta = bitcore.crypto.BN.fromString('64');
 				const bnPage = self.model.bnPage.sub(bnOne);
@@ -142,6 +143,9 @@ let gController = null;
 					[aPrevButton, aNextButton].forEach(theButton => {
 						self.buttonEnable(theButton);
 					});
+					const aEndDate = new Date();
+					const aDOMCrono = self.util.createElement ('div', {textContent: aEndDate - aStartDate});
+					aDOMTableWrapper.appendChild (aDOMCrono);
 				}, 0);
 			};
 
