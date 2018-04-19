@@ -1,3 +1,4 @@
+// vanilla, MVC semantic paradigma: no jquery, no angular, no innerHTML; just javascript.
 const bitcore = require('bitcore-lib'); // eslint-disable-line import/no-unresolved
 
 let gController = null;
