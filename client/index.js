@@ -1,4 +1,4 @@
-// vanilla, MVC semantic paradigma: no jquery, no angular, no innerHTML; just javascript.
+// Vanilla, MVC semantic paradigma: no jquery, no angular, no innerHTML; just javascript.
 const bitcore = require('bitcore-lib'); // eslint-disable-line import/no-unresolved
 
 let gController = null;
@@ -75,6 +75,7 @@ let gController = null;
 					theChildren.forEach(theChild => {
 						theDOM.appendChild(theChild);
 					});
+					return theDOM;
 				}
 			};
 			self.buttonDisable = function (theButton) {
@@ -96,6 +97,14 @@ let gController = null;
 					setTimeout(self.showTable, 0);
 				};
 			};
+			self.buildDOMPageNumber = bnMaxPages => {
+				const url = new URL(location);
+				const path = url.origin + url.pathname;
+				const aDOMLinkToActualPage = self.util.createElement('a', {textContent: 'Page ' + self.model.bnPage.toString(), href: path + '?page=' + self.model.bnPage.toString()});
+				const aDOMMaxPages = self.util.createElement('span', {textContent: ' out of ' + bnMaxPages.toString()});
+				const fragment = document.createDocumentFragment();
+				return self.util.appendChildren(fragment, [aDOMLinkToActualPage, aDOMMaxPages]);
+			};
 			self.showTable = () => {
 				const aStartDate = new Date();
 				const bnOne = bitcore.crypto.BN.fromString('1');
@@ -106,7 +115,8 @@ let gController = null;
 				const bnMaxNumberOfIndex = bitcore.crypto.BN.fromString('115792089237316195423570985008687907852837564279074904382605163141518161494336');
 				const bnMaxPages = bnMaxNumberOfIndex.div(bnDelta);
 				const aDOMHeader = self.util.createElement('h2', {textContent: 'Bitcoin private key database'});
-				const aDOMPageNumber = self.util.createElement('li', {textContent: 'Page ' + self.model.bnPage.toString() + ' out of ' + bnMaxPages.toString()});
+				const aDOMPageNumber = self.util.createElement('li');
+				aDOMPageNumber.appendChild(self.buildDOMPageNumber(bnMaxPages));
 				const aDOMKeysPerPage = self.util.createElement('li', {textContent: 'Private keys per page: ' + bnDelta.toString()});
 				const aDOMNumberOfIndex = self.util.createElement('li', {textContent: 'Total: ' + bnMaxNumberOfIndex.toString() + ' private keys'});
 
