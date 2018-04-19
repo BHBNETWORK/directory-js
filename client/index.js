@@ -104,9 +104,13 @@ let gController = null;
 				const bnEnd = bnBegin.add(bnDelta);
 				const bnMaxNumberOfIndex = bitcore.crypto.BN.fromString('115792089237316195423570985008687907852837564279074904382605163141518161494336');
 				const bnMaxPages = bnMaxNumberOfIndex.div(bnDelta);
-				const aDOMHeader = self.util.createElement('h2', {textContent: 'Bitcoin private key database'}, ['left']);
-				const aDOMPageNumber = self.util.createElement('h3', {textContent: 'Page ' + self.model.bnPage.toString() + ' out of ' + bnMaxPages.toString()});
-				const aDOMNumberOfIndex = self.util.createElement('h3', {textContent: 'Total: ' + bnMaxNumberOfIndex.toString()});
+				const aDOMHeader = self.util.createElement('h2', {textContent: 'Bitcoin private key database'});
+				const aDOMPageNumber = self.util.createElement('li', {textContent: 'Page ' + self.model.bnPage.toString() + ' out of ' + bnMaxPages.toString()});
+				const aDOMKeysPerPage = self.util.createElement('li', {textContent: 'Private keys per page: ' + bnDelta.toString()});
+				const aDOMNumberOfIndex = self.util.createElement('li', {textContent: 'Total: ' + bnMaxNumberOfIndex.toString() + ' private keys'});
+
+				const aDOMUlHeader = self.util.createElement('ul');
+				self.util.appendChildren(aDOMUlHeader, [aDOMPageNumber, aDOMKeysPerPage, aDOMNumberOfIndex]);
 				const aPrevButton = self.util.createElement('span', {textContent: 'Previous'}, ['ig_button', 'normal']);
 				aPrevButton.addEventListener('click', self.onClickButton(aPrevButton, bnOne.neg()));
 				const aNextButton = self.util.createElement('span', {textContent: 'Next'}, ['ig_button', 'normal']);
@@ -114,7 +118,7 @@ let gController = null;
 				const aDOMTableWrapper = document.getElementById('tableWrapper');
 				aDOMTableWrapper.innerHTML = null;
 				const aDOMContent = self.util.createElement('table');
-				self.util.appendChildren(aDOMTableWrapper, [aDOMHeader, aDOMPageNumber, aDOMNumberOfIndex, aPrevButton, aNextButton]);
+				self.util.appendChildren(aDOMTableWrapper, [aDOMHeader, aDOMUlHeader, aPrevButton, aNextButton]);
 				setTimeout(() => {
 					const bn = [];
 					for (let bnIter = bnBegin; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
@@ -123,23 +127,36 @@ let gController = null;
 					const results = bn.map(theIndex => {
 						return self.util.createAddressFromBNIndex(theIndex);
 					});
-					const buildField = function (element, bool_compressed) {
+					const buildField = function (element, boolCompressed) { // eslint-disable-line no-unused-vars
+						const fieldName = ['extended', 'compressed'];
+						return 'wif:\t' + element.wif[fieldName[Number(boolCompressed)]] + '\naddress:\t' + element.address[fieldName[Number(boolCompressed)]];
+					};
+					const buildDOMField = function (element, boolCompressed) {
 					// https://blockchair.com/bitcoin/address/1CK6KHY6MHgYvmRQ4PAafKYDrg1ejbH1cE
 						const fieldName = ['extended', 'compressed'];
-						return 'wif:\t' + element.wif[fieldName[+bool_compressed]] + '\naddress:\t' + element.address[fieldName[+bool_compressed]];
+
+						const aDOMTd = self.util.createElement('td');
+						const aDOMUl = self.util.createElement('ul');
+						const aDOMLiWif = self.util.createElement('li', {textContent: 'wif: ' + element.wif[fieldName[Number(boolCompressed)]]});
+						const aDOMLiAddress = self.util.createElement('li', {textContent: 'address: '});
+						const aDOMHref = self.util.createElement('a', {href: 'https://blockchair.com/bitcoin/address/' + element.address[fieldName[Number(boolCompressed)]], textContent: element.address[fieldName[Number(boolCompressed)]]});
+						aDOMLiAddress.appendChild(aDOMHref);
+						self.util.appendChildren(aDOMUl, [aDOMLiWif, aDOMLiAddress]);
+						aDOMTd.appendChild(aDOMUl);
+						return aDOMTd;
 					};
 					const styles = ['background-darkgray', 'background-gray', 'background-lightgray'];
 					const aDOMTrs = results.map((element, index) => {
 						const aDOMTds = [
 							self.util.createElement('td', {textContent: element.index}, ['center']),
-							self.util.createElement('td', {textContent: buildField(element, false)}, ['preformatted']),
-							self.util.createElement('td', {textContent: buildField(element, true)}, ['preformatted'])
+							buildDOMField(element, false),
+							buildDOMField(element, true)
 						];
-						const aDOMTr = self.util.createElement('tr', null, [styles [index%(styles.length)]]);
+						const aDOMTr = self.util.createElement('tr', null, [styles[index % (styles.length)]]);
 						self.util.appendChildren(aDOMTr, aDOMTds);
 						return aDOMTr;
 					});
-					const aDOMThs = ['index', 'extended', 'compressed'].map(head => {
+					const aDOMThs = ['private key', 'extended', 'compressed'].map(head => {
 						return self.util.createElement('th', {textContent: head});
 					});
 					const aDOMTr = self.util.createElement('tr');
