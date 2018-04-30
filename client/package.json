@@ -1,0 +1,18 @@
+{
+	"scripts": {
+		"test": "xo"
+	},
+	"devDependencies": {
+		"xo": "^0.20.3"
+	},
+	"xo": {
+		"esnext": true,
+		"space": false,
+		"rules": {},
+		"semicolon": true,
+		"envs": [
+			"browser",
+			"node"
+		]
+	}
+}
