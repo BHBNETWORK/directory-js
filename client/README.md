@@ -10,3 +10,4 @@ Creating a directory.io website, just serving a `static` website
 ## Open
 
 * `open index.html`
+* [directory-js](https://bhbnetwork.github.io/directory-js)
