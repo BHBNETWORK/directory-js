@@ -58,8 +58,17 @@ let gController = null;
 					const aWIFCompressed = aPrivateKeyCompressed.toWIF();
 					const aAddressCompressed = aPrivateKeyCompressed.toAddress();
 
+					self.util.assert (aPrivateKeyExtended.toString () === aPrivateKeyCompressed.toString ());
+
 					const aCalculatedValue = {
-						index: theBNIndex.toString(),
+						index: {
+							dec: theBNIndex.toString(),
+							hex: aPrivateKeyExtended.toString ()
+						},
+						key:{
+							extended: aPrivateKeyExtended.toString (),
+							compressed: aPrivateKeyCompressed.toString()
+						},
 						wif: {
 							extended: aWIFExtended.toString(),
 							compressed: aWIFCompressed.toString()
@@ -142,6 +151,17 @@ let gController = null;
 						const fieldName = ['extended', 'compressed'];
 						return 'wif:\t' + element.wif[fieldName[Number(boolCompressed)]] + '\naddress:\t' + element.address[fieldName[Number(boolCompressed)]];
 					};
+
+					const buildDOMFieldIndex = function (element) { // eslint-disable-line no-unused-vars
+						const aDOMTd = self.util.createElement('td');
+ 						const aDOMUl = self.util.createElement('ul');
+						const aDOMLiIndexDec = self.util.createElement('li', {textContent: 'dec: ' + element.index.dec});
+						const aDOMLiIndexHex = self.util.createElement('li', {textContent: 'hex: ' + element.index.hex});
+						self.util.appendChildren(aDOMUl, [aDOMLiIndexDec, aDOMLiIndexHex]);
+						aDOMTd.appendChild(aDOMUl);
+						return aDOMTd;
+					};
+
 					const buildDOMField = function (element, boolCompressed) {
 					// https://blockchair.com/bitcoin/address/1CK6KHY6MHgYvmRQ4PAafKYDrg1ejbH1cE
 						const fieldName = ['extended', 'compressed'];
@@ -159,7 +179,7 @@ let gController = null;
 					const styles = ['background-darkgray', 'background-gray', 'background-lightgray'];
 					const aDOMTrs = results.map((element, index) => {
 						const aDOMTds = [
-							self.util.createElement('td', {textContent: element.index}, ['center']),
+							buildDOMFieldIndex(element),
 							buildDOMField(element, false),
 							buildDOMField(element, true)
 						];
