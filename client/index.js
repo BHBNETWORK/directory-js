@@ -58,15 +58,15 @@ let gController = null;
 					const aWIFCompressed = aPrivateKeyCompressed.toWIF();
 					const aAddressCompressed = aPrivateKeyCompressed.toAddress();
 
-					self.util.assert (aPrivateKeyExtended.toString () === aPrivateKeyCompressed.toString ());
+					self.util.assert(aPrivateKeyExtended.toString() === aPrivateKeyCompressed.toString());
 
 					const aCalculatedValue = {
 						index: {
 							dec: theBNIndex.toString(),
-							hex: aPrivateKeyExtended.toString ()
+							hex: aPrivateKeyExtended.toString()
 						},
-						key:{
-							extended: aPrivateKeyExtended.toString (),
+						key: {
+							extended: aPrivateKeyExtended.toString(),
 							compressed: aPrivateKeyCompressed.toString()
 						},
 						wif: {
