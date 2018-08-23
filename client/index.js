@@ -153,28 +153,24 @@ let gController = null;
 					};
 
 					const buildDOMFieldIndex = function (element) { // eslint-disable-line no-unused-vars
-						const aDOMTd = self.util.createElement('td');
- 						const aDOMUl = self.util.createElement('ul');
+						const aDOMUl = self.util.createElement('ul');
 						const aDOMLiIndexDec = self.util.createElement('li', {textContent: 'dec: ' + element.index.dec});
 						const aDOMLiIndexHex = self.util.createElement('li', {textContent: 'hex: ' + element.index.hex});
 						self.util.appendChildren(aDOMUl, [aDOMLiIndexDec, aDOMLiIndexHex]);
-						aDOMTd.appendChild(aDOMUl);
-						return aDOMTd;
+						return aDOMUl;
 					};
 
 					const buildDOMField = function (element, boolCompressed) {
 					// https://blockchair.com/bitcoin/address/1CK6KHY6MHgYvmRQ4PAafKYDrg1ejbH1cE
 						const fieldName = ['extended', 'compressed'];
 
-						const aDOMTd = self.util.createElement('td');
 						const aDOMUl = self.util.createElement('ul');
 						const aDOMLiWif = self.util.createElement('li', {textContent: 'wif: ' + element.wif[fieldName[Number(boolCompressed)]]});
 						const aDOMLiAddress = self.util.createElement('li', {textContent: 'address: '});
 						const aDOMHref = self.util.createElement('a', {href: 'https://blockchair.com/bitcoin/address/' + element.address[fieldName[Number(boolCompressed)]], textContent: element.address[fieldName[Number(boolCompressed)]]});
 						aDOMLiAddress.appendChild(aDOMHref);
 						self.util.appendChildren(aDOMUl, [aDOMLiWif, aDOMLiAddress]);
-						aDOMTd.appendChild(aDOMUl);
-						return aDOMTd;
+						return aDOMUl;
 					};
 					const styles = ['background-darkgray', 'background-gray', 'background-lightgray'];
 					const aDOMTrs = results.map((element, index) => {
@@ -182,7 +178,11 @@ let gController = null;
 							buildDOMFieldIndex(element),
 							buildDOMField(element, false),
 							buildDOMField(element, true)
-						];
+						].map(theDOMUl => {
+							const aDOMTd = self.util.createElement('td');
+							aDOMTd.appendChild(theDOMUl);
+							return aDOMTd;
+						});
 						const aDOMTr = self.util.createElement('tr', null, [styles[index % (styles.length)]]);
 						self.util.appendChildren(aDOMTr, aDOMTds);
 						return aDOMTr;
