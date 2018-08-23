@@ -152,35 +152,34 @@ let gController = null;
 						return 'wif:\t' + element.wif[fieldName[Number(boolCompressed)]] + '\naddress:\t' + element.address[fieldName[Number(boolCompressed)]];
 					};
 
-					const buildDOMFieldIndex = function (element) { // eslint-disable-line no-unused-vars
-						const aDOMUl = self.util.createElement('ul');
+					const buildLiFieldsIndex = function (element) { // eslint-disable-line no-unused-vars
 						const aDOMLiIndexDec = self.util.createElement('li', {textContent: 'dec: ' + element.index.dec});
 						const aDOMLiIndexHex = self.util.createElement('li', {textContent: 'hex: ' + element.index.hex});
-						self.util.appendChildren(aDOMUl, [aDOMLiIndexDec, aDOMLiIndexHex]);
-						return aDOMUl;
+						return [aDOMLiIndexDec, aDOMLiIndexHex];
 					};
 
-					const buildDOMField = function (element, boolCompressed) {
+					const buildLiFields = function (element, boolCompressed) {
 					// https://blockchair.com/bitcoin/address/1CK6KHY6MHgYvmRQ4PAafKYDrg1ejbH1cE
 						const fieldName = ['extended', 'compressed'];
 
-						const aDOMUl = self.util.createElement('ul');
 						const aDOMLiWif = self.util.createElement('li', {textContent: 'wif: ' + element.wif[fieldName[Number(boolCompressed)]]});
 						const aDOMLiAddress = self.util.createElement('li', {textContent: 'address: '});
 						const aDOMHref = self.util.createElement('a', {href: 'https://blockchair.com/bitcoin/address/' + element.address[fieldName[Number(boolCompressed)]], textContent: element.address[fieldName[Number(boolCompressed)]]});
 						aDOMLiAddress.appendChild(aDOMHref);
-						self.util.appendChildren(aDOMUl, [aDOMLiWif, aDOMLiAddress]);
-						return aDOMUl;
+						return [aDOMLiWif, aDOMLiAddress];
 					};
 					const styles = ['background-darkgray', 'background-gray', 'background-lightgray'];
 					const aDOMTrs = results.map((element, index) => {
 						const aDOMTds = [
-							buildDOMFieldIndex(element),
-							buildDOMField(element, false),
-							buildDOMField(element, true)
-						].map(theDOMUl => {
+							buildLiFieldsIndex(element),
+							buildLiFields(element, false),
+							buildLiFields(element, true)
+						].map(theLiFields => {
 							const aDOMTd = self.util.createElement('td');
-							aDOMTd.appendChild(theDOMUl);
+							const aDOMUl = self.util.createElement('ul');
+							self.util.appendChildren(aDOMUl, theLiFields);
+
+							aDOMTd.appendChild(aDOMUl);
 							return aDOMTd;
 						});
 						const aDOMTr = self.util.createElement('tr', null, [styles[index % (styles.length)]]);
