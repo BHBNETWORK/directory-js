@@ -52,20 +52,20 @@ let gController = null;
 					const aPrivateKeyExtended = new bitcore.PrivateKey({bn: theBNIndex, compressed: false, network: 'livenet'});
 					const aWIFExtended = aPrivateKeyExtended.toWIF();
 					const aAddressExtended = aPrivateKeyExtended.toAddress();
-					const aPublicKeyExtended = bitcore.PublicKey(aPrivateKeyExtended);
+					const aPublicKeyExtended = bitcore.PublicKey(aPrivateKeyExtended); // eslint-disable-line new-cap
 
 					// Compressed
 					const aPrivateKeyCompressed = new bitcore.PrivateKey({bn: theBNIndex, compressed: true, network: 'livenet'});
 					const aWIFCompressed = aPrivateKeyCompressed.toWIF();
 					const aAddressCompressed = aPrivateKeyCompressed.toAddress();
-					const aPublicKeyCompressed = bitcore.PublicKey(aPrivateKeyCompressed);
+					const aPublicKeyCompressed = bitcore.PublicKey(aPrivateKeyCompressed); // eslint-disable-line new-cap
 
 					self.util.assert(aPrivateKeyExtended.toString() === aPrivateKeyCompressed.toString());
 
 					const aCalculatedValue = {
-						publicKey:{
-							extended: aPublicKeyExtended.toString (),
-							compressed: aPublicKeyCompressed.toString ()
+						publicKey: {
+							extended: aPublicKeyExtended.toString(),
+							compressed: aPublicKeyCompressed.toString()
 						},
 						index: {
 							dec: theBNIndex.toString(),
