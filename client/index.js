@@ -131,9 +131,9 @@ let gController = null;
 
 				const aDOMUlHeader = self.util.createElement('ul');
 				self.util.appendChildren(aDOMUlHeader, [aDOMPageNumber, aDOMKeysPerPage, aDOMNumberOfIndex]);
-				const aPrevButton = self.util.createElement('span', {textContent: 'Previous'}, ['ig_button', 'normal']);
+				const aPrevButton = self.util.createElement('span', {textContent: '< Previous'}, ['ig_button', 'normal']);
 				aPrevButton.addEventListener('click', self.onClickButton(aPrevButton, bnOne.neg()));
-				const aNextButton = self.util.createElement('span', {textContent: 'Next'}, ['ig_button', 'normal']);
+				const aNextButton = self.util.createElement('span', {textContent: 'Next > '}, ['ig_button', 'normal']);
 				aNextButton.addEventListener('click', self.onClickButton(aNextButton, bnOne));
 				const aDOMTableWrapper = document.getElementById('tableWrapper');
 				aDOMTableWrapper.innerHTML = null;
