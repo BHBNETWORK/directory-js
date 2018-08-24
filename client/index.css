@@ -63,6 +63,16 @@ td{
 	width: 10em;
 }
 
+.ig_button_network{
+	margin: 0.5em;
+	border-radius:8px;
+	border: 2px solid black;
+	padding: 0.5em;
+	text-align: center;
+	font-weight: bold;
+	width: 10em;
+}
+
 .markets ol li ul, ol li ul li{
 	margin-left: 0;
 	padding-left: 0;

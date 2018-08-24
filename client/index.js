@@ -47,14 +47,14 @@ let gController = null;
 						})
 					};
 				},
-				createAddressFromBNIndex(theBNIndex) {
+				createAddressFromBNIndex(theBNIndex, theNetwork) {
 					// Extended
-					const aPrivateKeyExtended = new bitcore.PrivateKey({bn: theBNIndex, compressed: false, network: 'livenet'});
+					const aPrivateKeyExtended = new bitcore.PrivateKey({bn: theBNIndex, compressed: false, network: theNetwork});
 					const aWIFExtended = aPrivateKeyExtended.toWIF();
 					const aAddressExtended = aPrivateKeyExtended.toAddress();
 
 					// Compressed
-					const aPrivateKeyCompressed = new bitcore.PrivateKey({bn: theBNIndex, compressed: true, network: 'livenet'});
+					const aPrivateKeyCompressed = new bitcore.PrivateKey({bn: theBNIndex, compressed: true, network: theNetwork});
 					const aWIFCompressed = aPrivateKeyCompressed.toWIF();
 					const aAddressCompressed = aPrivateKeyCompressed.toAddress();
 
@@ -96,8 +96,10 @@ let gController = null;
 				theButton.classList.remove('busy');
 				theButton.classList.add('normal');
 			};
+			self.network = ['livenet', 'testnet'];
 			self.model = {
-				bnPage: null // BN of current page.
+				bnPage: null, // BN of current page.
+				networkIndex: 0
 			};
 			self.onClickButton = (theButton, theIncrement) => {
 				return function () {
@@ -106,6 +108,15 @@ let gController = null;
 					setTimeout(self.showTable, 0);
 				};
 			};
+
+			self.onClickButtonNetwork = (theButton1, theButton2, theNetworkIndex) => {
+				return function () {
+
+					self.model.networkIndex = theNetworkIndex;
+					setTimeout(self.showTable, 0);
+				};
+			};
+
 			self.buildDOMPageNumber = bnMaxPages => {
 				const url = new URL(location);
 				const path = url.origin + url.pathname;
@@ -131,21 +142,28 @@ let gController = null;
 
 				const aDOMUlHeader = self.util.createElement('ul');
 				self.util.appendChildren(aDOMUlHeader, [aDOMPageNumber, aDOMKeysPerPage, aDOMNumberOfIndex]);
+
 				const aPrevButton = self.util.createElement('span', {textContent: 'Previous'}, ['ig_button', 'normal']);
 				aPrevButton.addEventListener('click', self.onClickButton(aPrevButton, bnOne.neg()));
 				const aNextButton = self.util.createElement('span', {textContent: 'Next'}, ['ig_button', 'normal']);
 				aNextButton.addEventListener('click', self.onClickButton(aNextButton, bnOne));
+
+				const aLivenetButton = self.util.createElement('span', {textContent: 'livenet'}, ['ig_button_network', 'normal']);
+				const aTestnetButton = self.util.createElement('span', {textContent: 'testnet'}, ['ig_button_network', 'normal']);
+				aLivenetButton.addEventListener('click', self.onClickButtonNetwork(aLivenetButton, aTestnetButton, 0));
+				aTestnetButton.addEventListener('click', self.onClickButtonNetwork(aTestnetButton, aLivenetButton, 1));
+
 				const aDOMTableWrapper = document.getElementById('tableWrapper');
 				aDOMTableWrapper.innerHTML = null;
 				const aDOMContent = self.util.createElement('table');
-				self.util.appendChildren(aDOMTableWrapper, [aDOMHeader, aDOMUlHeader, aPrevButton, aNextButton]);
+				self.util.appendChildren(aDOMTableWrapper, [aDOMHeader, aDOMUlHeader, aPrevButton, aNextButton, aLivenetButton, aTestnetButton]);
 				setTimeout(() => {
 					const bn = [];
 					for (let bnIter = bnBegin; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
 						bn.push(bnIter);
 					}
 					const results = bn.map(theIndex => {
-						return self.util.createAddressFromBNIndex(theIndex);
+						return self.util.createAddressFromBNIndex(theIndex, self.network [self.model.networkIndex]);
 					});
 					const buildField = function (element, boolCompressed) { // eslint-disable-line no-unused-vars
 						const fieldName = ['extended', 'compressed'];
