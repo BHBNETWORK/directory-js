@@ -136,9 +136,7 @@ let gController = null;
 				const aNextButton = self.util.createElement('span', {textContent: 'Next > '}, ['ig_button', 'normal']);
 				aNextButton.addEventListener('click', self.onClickButton(aNextButton, bnOne));
 				const aDOMTableWrapper = document.getElementById('tableWrapper');
-				aDOMTableWrapper.innerHTML = null;
 				const aDOMContent = self.util.createElement('table');
-				self.util.appendChildren(aDOMTableWrapper, [aDOMHeader, aDOMUlHeader, aPrevButton, aNextButton]);
 				setTimeout(() => {
 					const bn = [];
 					for (let bnIter = bnBegin; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
@@ -200,6 +198,8 @@ let gController = null;
 					const aDOMDonation = self.util.createElement('div', {textContent: 'It took a lot of computing power to generate this database. Donations welcome: 1ALL13199J1n4cDQ276We3wctwr11xB8Rn'}, ['crono']);
 					const aEndDate = new Date();
 					const aDOMCrono = self.util.createElement('div', {textContent: 'ticks: ' + (aEndDate - aStartDate)}, ['crono']);
+					aDOMTableWrapper.innerHTML = null;
+					self.util.appendChildren(aDOMTableWrapper, [aDOMHeader, aDOMUlHeader, aPrevButton, aNextButton]);
 					self.util.appendChildren(aDOMTableWrapper, [aDOMCrono, aDOMContent, aDOMDonation]);
 				}, 0);
 			};
