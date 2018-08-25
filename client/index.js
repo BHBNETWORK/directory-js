@@ -229,22 +229,24 @@ let gController = null;
 				}, 0);
 			};
 
+			self.getOrDefault = (params, field, defaultValue) => {
+				let ret = params.get(field);
+				if (null === ret){
+					ret = defaultValue;
+				}
+				return ret;
+			};
+
 			self.show = () => {
 				const url = new URL(location);
 				const path = url.origin + url.pathname;
 				console.log(path);
 				const params = url.searchParams;
-				let aPageString = params.get('page');
-				if (aPageString === null) {
-					aPageString = '1';
-				}
+
+				const aPageString = self.getOrDefault (params, 'page', '1');
 				self.model.bnPage = bitcore.crypto.BN.fromString(aPageString);
 
-				let aNetworkIndexString = params.get('network');
-				if (aNetworkIndexString === null) {
-					aNetworkIndexString = '0';
-				}
-
+				const aNetworkIndexString = self.getOrDefault (params, 'network', '0');
 				self.model.networkIndex = parseInt(aNetworkIndexString, 10);
 
 				setTimeout(self.showTable, 0);
