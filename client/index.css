@@ -64,13 +64,26 @@ td{
 }
 
 .ig_button_network{
-	margin: 0.5em;
-	border-radius:8px;
-	border: 2px solid black;
+	margin: 0;
+	border-radius:0;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
 	padding: 0.5em;
 	text-align: center;
-	font-weight: bold;
 	width: 10em;
+}
+
+.ig_button_network_left{
+	border-left: 1px solid gray;
+	border-right: 1px solid gray;
+}
+
+.ig_button_network_right{
+	border-right: 1px solid gray;
+}
+
+.ig_button_network_selected{
+	background: lightgray;
 }
 
 .markets ol li ul, ol li ul li{

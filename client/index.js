@@ -111,7 +111,10 @@ let gController = null;
 
 			self.onClickButtonNetwork = (theButton1, theButton2, theNetworkIndex) => {
 				return function () {
-
+					theButton1.classList.remove ('normal');
+					theButton1.classList.add ('ig_button_network_selected');
+					theButton2.classList.remove ('ig_button_network_selected');
+					theButton2.classList.add ('normal');
 					self.model.networkIndex = theNetworkIndex;
 					setTimeout(self.showTable, 0);
 				};
@@ -148,8 +151,12 @@ let gController = null;
 				const aNextButton = self.util.createElement('span', {textContent: 'Next'}, ['ig_button', 'normal']);
 				aNextButton.addEventListener('click', self.onClickButton(aNextButton, bnOne));
 
-				const aLivenetButton = self.util.createElement('span', {textContent: 'livenet'}, ['ig_button_network', 'normal']);
-				const aTestnetButton = self.util.createElement('span', {textContent: 'testnet'}, ['ig_button_network', 'normal']);
+				const chooseClass = function (theNetworkIndex){
+					const kVect = ['normal', 'ig_button_network_selected'];
+					return kVect [Number (self.model.networkIndex === theNetworkIndex)];
+				};
+				const aLivenetButton = self.util.createElement('span', {textContent: 'Livenet'}, ['ig_button_network', 'ig_button_network_left', chooseClass (0)]);
+				const aTestnetButton = self.util.createElement('span', {textContent: 'Testnet'}, ['ig_button_network', 'ig_button_network_right', chooseClass (1)]);
 				aLivenetButton.addEventListener('click', self.onClickButtonNetwork(aLivenetButton, aTestnetButton, 0));
 				aTestnetButton.addEventListener('click', self.onClickButtonNetwork(aTestnetButton, aLivenetButton, 1));
 
