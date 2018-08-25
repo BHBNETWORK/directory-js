@@ -123,7 +123,7 @@ let gController = null;
 			self.buildDOMPageNumber = bnMaxPages => {
 				const url = new URL(location);
 				const path = url.origin + url.pathname;
-				const aDOMLinkToActualPage = self.util.createElement('a', {textContent: 'Page ' + self.model.bnPage.toString(), href: path + '?page=' + self.model.bnPage.toString()});
+				const aDOMLinkToActualPage = self.util.createElement('a', {textContent: 'Page ' + self.model.bnPage.toString(), href: path + '?page=' + self.model.bnPage.toString() + '&network=' + self.model.networkIndex});
 				const aDOMMaxPages = self.util.createElement('span', {textContent: ' out of ' + bnMaxPages.toString()});
 				const fragment = document.createDocumentFragment();
 				return self.util.appendChildren(fragment, [aDOMLinkToActualPage, aDOMMaxPages]);
@@ -239,6 +239,14 @@ let gController = null;
 					aPageString = '1';
 				}
 				self.model.bnPage = bitcore.crypto.BN.fromString(aPageString);
+
+				let aNetworkIndexString = params.get('network');
+				if (aNetworkIndexString === null) {
+					aNetworkIndexString = '0';
+				}
+
+				self.model.networkIndex = parseInt(aNetworkIndexString, 10);
+
 				setTimeout(self.showTable, 0);
 			};
 		};
