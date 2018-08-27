@@ -17,14 +17,29 @@ const createAddressFromBNIndex = function (theBNIndex, theNetwork) {
 	const aPrivateKeyExtended = new bitcore.PrivateKey({bn: theBNIndex, compressed: false, network: theNetwork});
 	const aWIFExtended = aPrivateKeyExtended.toWIF();
 	const aAddressExtended = aPrivateKeyExtended.toAddress();
+	const aPublicKeyExtended = bitcore.PublicKey(aPrivateKeyExtended); // eslint-disable-line new-cap
 
 	// Compressed
 	const aPrivateKeyCompressed = new bitcore.PrivateKey({bn: theBNIndex, compressed: true, network: theNetwork});
 	const aWIFCompressed = aPrivateKeyCompressed.toWIF();
 	const aAddressCompressed = aPrivateKeyCompressed.toAddress();
+	const aPublicKeyCompressed = bitcore.PublicKey(aPrivateKeyCompressed); // eslint-disable-line new-cap
+
+	assert(aPrivateKeyExtended.toString() === aPrivateKeyCompressed.toString());
 
 	const aCalculatedValue = {
-		index: theBNIndex.toString(),
+		index: {
+			dec: theBNIndex.toString(),
+			hex: aPrivateKeyExtended.toString()
+		},
+		key: {
+			extended: aPrivateKeyExtended.toString(),
+			compressed: aPrivateKeyCompressed.toString()
+		},
+		public_key:{
+			extended: aPublicKeyExtended.toString(),
+			compressed: aPublicKeyCompressed.toString()
+		},
 		wif: {
 			extended: aWIFExtended.toString(),
 			compressed: aWIFCompressed.toString()
