@@ -231,7 +231,7 @@ let gController = null;
 
 			self.getOrDefault = (params, field, defaultValue) => {
 				let ret = params.get(field);
-				if (null === ret){
+				if (ret === null) {
 					ret = defaultValue;
 				}
 				return ret;
@@ -243,10 +243,10 @@ let gController = null;
 				console.log(path);
 				const params = url.searchParams;
 
-				const aPageString = self.getOrDefault (params, 'page', '1');
+				const aPageString = self.getOrDefault(params, 'page', '1');
 				self.model.bnPage = bitcore.crypto.BN.fromString(aPageString);
 
-				const aNetworkIndexString = self.getOrDefault (params, 'network', '0');
+				const aNetworkIndexString = self.getOrDefault(params, 'network', '0');
 				self.model.networkIndex = parseInt(aNetworkIndexString, 10);
 
 				setTimeout(self.showTable, 0);

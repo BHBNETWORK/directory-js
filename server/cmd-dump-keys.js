@@ -36,7 +36,7 @@ const createAddressFromBNIndex = function (theBNIndex, theNetwork) {
 			extended: aPrivateKeyExtended.toString(),
 			compressed: aPrivateKeyCompressed.toString()
 		},
-		public_key:{
+		publicKey: {
 			extended: aPublicKeyExtended.toString(),
 			compressed: aPublicKeyCompressed.toString()
 		},
