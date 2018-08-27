@@ -12,14 +12,14 @@ const readInput = function (theCompletion) {
 	return readFile(kInputs[0], theCompletion);
 };
 
-const createAddressFromBNIndex = function (theBNIndex) {
+const createAddressFromBNIndex = function (theBNIndex, theNetwork) {
 	// Extended
-	const aPrivateKeyExtended = new bitcore.PrivateKey({bn: theBNIndex, compressed: false, network: 'livenet'});
+	const aPrivateKeyExtended = new bitcore.PrivateKey({bn: theBNIndex, compressed: false, network: theNetwork});
 	const aWIFExtended = aPrivateKeyExtended.toWIF();
 	const aAddressExtended = aPrivateKeyExtended.toAddress();
 
 	// Compressed
-	const aPrivateKeyCompressed = new bitcore.PrivateKey({bn: theBNIndex, compressed: true, network: 'livenet'});
+	const aPrivateKeyCompressed = new bitcore.PrivateKey({bn: theBNIndex, compressed: true, network: theNetwork});
 	const aWIFCompressed = aPrivateKeyCompressed.toWIF();
 	const aAddressCompressed = aPrivateKeyCompressed.toAddress();
 
@@ -39,7 +39,7 @@ const createAddressFromBNIndex = function (theBNIndex) {
 
 readInput((err, crudedata) => {
 // Test:
-// echo '{"offset":"123", "delta": 256}' | node cmd-dump-keys.js
+// echo '{"offset":"123", "delta": 256, "network":"livenet"}' | node cmd-dump-keys.js
 	if (err) {
 		throw (err);
 	}	else {
@@ -47,7 +47,8 @@ readInput((err, crudedata) => {
 
 		const schema = {
 			offset: joi.string().required(),
-			delta: joi.number().required().integer().min(1).max(256)
+			delta: joi.number().required().integer().min(1).max(256),
+			network: joi.string().required()
 		};
 		const joiResult = joi.validate(aInput, schema);
 		assert.strictEqual(joiResult.error, null);
@@ -59,7 +60,7 @@ readInput((err, crudedata) => {
 
 		const results = [];
 		for (let bnIter = bitcore.crypto.BN.fromString(aInput.offset); bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
-			results.push(createAddressFromBNIndex(bnIter));
+			results.push(createAddressFromBNIndex(bnIter, aInput.network));
 		}
 		console.log(JSON.stringify(results));
 	}
