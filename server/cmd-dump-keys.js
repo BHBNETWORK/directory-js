@@ -62,19 +62,19 @@ readInput((err, crudedata) => {
 
 		const schema = {
 			offset: joi.string().required(),
+			base: joi.number().required().integer(),
 			delta: joi.number().required().integer().min(1).max(256),
 			network: joi.string().required()
 		};
 		const joiResult = joi.validate(aInput, schema);
 		assert.strictEqual(joiResult.error, null);
 
-		const bnOne = bitcore.crypto.BN.fromString('1');
-		const bnBegin = bitcore.crypto.BN.fromString(aInput.offset);
+		const bnBegin = bitcore.crypto.BN.fromString(aInput.offset, aInput.base);
 		const bnDelta = new bitcore.crypto.BN(aInput.delta);
 		const bnEnd = bnBegin.add(bnDelta);
 
 		const results = [];
-		for (let bnIter = bitcore.crypto.BN.fromString(aInput.offset); bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
+		for (let bnIter = bitcore.crypto.BN.fromString(aInput.offset, aInput.base); bnIter.lt(bnEnd); bnIter = bnIter.add(bitcore.crypto.BN.One)) {
 			results.push(createAddressFromBNIndex(bnIter, aInput.network));
 		}
 		console.log(JSON.stringify(results));
