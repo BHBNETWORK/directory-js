@@ -99,13 +99,28 @@ let gController = null;
 			self.network = ['livenet', 'testnet'];
 			self.model = {
 				bnPage: null, // BN of current page.
-				networkIndex: 0
+				networkIndex: 0,
+				constants: {
+					bnOne: bitcore.crypto.BN.fromString('1'),
+					bnDelta: bitcore.crypto.BN.fromString('64'),
+					bnFirstPage: bitcore.crypto.BN.fromString('1'),
+					bnLast: bitcore.crypto.BN.fromString('115792089237316195423570985008687907852837564279074904382605163141518161494336')
+				}
 			};
+			self.model.constants.bnLastPage = self.model.constants.bnLast.div(self.model.constants.bnDelta);
+
+			self.checkPage = theBN => {
+				return (theBN.cmp(self.model.constants.bnFirstPage) >= 0) && (theBN.cmp(self.model.constants.bnLastPage) <= 0);
+			};
+
 			self.onClickButton = (theButton, theIncrement) => {
 				return function () {
-					self.buttonDisable(theButton);
-					self.model.bnPage = self.model.bnPage.add(theIncrement);
-					setTimeout(self.showTable, 0);
+					const nextBnPage = self.model.bnPage.add(theIncrement);
+					if (self.checkPage(nextBnPage) === true) {
+						self.buttonDisable(theButton);
+						self.model.bnPage = nextBnPage;
+						setTimeout(self.showTable, 0);
+					}
 				};
 			};
 
@@ -120,23 +135,27 @@ let gController = null;
 				};
 			};
 
-			self.buildDOMPageNumber = bnMaxPages => {
+			self.buildDOMPageNumber = () => {
 				const url = new URL(location);
 				const path = url.origin + url.pathname;
-				const aDOMLinkToActualPage = self.util.createElement('a', {textContent: 'Page ' + self.model.bnPage.toString(), href: path + '?page=' + self.model.bnPage.toString() + '&network=' + self.model.networkIndex});
-				const aDOMMaxPages = self.util.createElement('span', {textContent: ' out of ' + bnMaxPages.toString()});
+				const aDOMLinkToFirstPage = self.util.createElement('a', {textContent: 'first', href: path + '?page=' + self.model.constants.bnFirstPage.toString() + '&network=' + self.model.networkIndex});
+				const aDOMSeparator1 = self.util.createElement('span', {textContent: ' || '});
+				const aDOMLinkToActualPage = self.util.createElement('a', {textContent: self.model.bnPage.toString(), href: path + '?page=' + self.model.bnPage.toString() + '&network=' + self.model.networkIndex});
+				const aDOMSeparator2 = self.util.createElement('span', {textContent: ' || '});
+				const aDOMLinkToMaxPage = self.util.createElement('a', {textContent: 'last', href: path + '?page=' + self.model.constants.bnLastPage.toString() + '&network=' + self.model.networkIndex});
 				const fragment = document.createDocumentFragment();
-				return self.util.appendChildren(fragment, [aDOMLinkToActualPage, aDOMMaxPages]);
+				return self.util.appendChildren(fragment, [aDOMLinkToFirstPage, aDOMSeparator1, aDOMLinkToActualPage, aDOMSeparator2, aDOMLinkToMaxPage]);
 			};
+
 			self.showTable = () => {
 				const aStartDate = new Date();
-				const bnOne = bitcore.crypto.BN.fromString('1');
-				const bnDelta = bitcore.crypto.BN.fromString('64');
+				const bnOne = self.model.constants.bnOne;
+				const bnDelta = self.model.constants.bnDelta;
 				const bnPage = self.model.bnPage.sub(bnOne);
 				const bnBegin = bnPage.mul(bnDelta).add(bnOne);
 				const bnEnd = bnBegin.add(bnDelta);
-				const bnMaxNumberOfIndex = bitcore.crypto.BN.fromString('115792089237316195423570985008687907852837564279074904382605163141518161494336');
-				const bnMaxPages = bnMaxNumberOfIndex.div(bnDelta);
+				const bnMaxNumberOfIndex = self.model.constants.bnLast;
+				const bnMaxPages = self.model.constants.bnLastPage;
 				const aDOMHeader = self.util.createElement('h2', {textContent: 'Bitcoin private key database'});
 				const aDOMPageNumber = self.util.createElement('li');
 				aDOMPageNumber.appendChild(self.buildDOMPageNumber(bnMaxPages));
