@@ -139,9 +139,10 @@ let gController = null;
 				const url = new URL(location);
 				const path = url.origin + url.pathname;
 				const aDOMLinkToActualPage = self.util.createElement('a', {textContent: 'Page ' + self.model.bnPage.toString(), href: path + '?page=' + self.model.bnPage.toString() + '&network=' + self.model.networkIndex});
-				const aDOMMaxPages = self.util.createElement('span', {textContent: ' out of ' + bnMaxPages.toString()});
+				const aDOMOutOf = self.util.createElement('span', {textContent: ' out of '});
+				const aDOMLinkToMaxPage = self.util.createElement('a', {textContent: self.model.constants.bnLastPage.toString (), href: path + '?page=' + self.model.constants.bnLastPage.toString() + '&network=' + self.model.networkIndex});
 				const fragment = document.createDocumentFragment();
-				return self.util.appendChildren(fragment, [aDOMLinkToActualPage, aDOMMaxPages]);
+				return self.util.appendChildren(fragment, [aDOMLinkToActualPage, aDOMOutOf, aDOMLinkToMaxPage]);
 			};
 
 			self.showTable = () => {
