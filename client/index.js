@@ -138,11 +138,13 @@ let gController = null;
 			self.buildDOMPageNumber = bnMaxPages => {
 				const url = new URL(location);
 				const path = url.origin + url.pathname;
-				const aDOMLinkToActualPage = self.util.createElement('a', {textContent: 'Page ' + self.model.bnPage.toString(), href: path + '?page=' + self.model.bnPage.toString() + '&network=' + self.model.networkIndex});
-				const aDOMOutOf = self.util.createElement('span', {textContent: ' out of '});
-				const aDOMLinkToMaxPage = self.util.createElement('a', {textContent: self.model.constants.bnLastPage.toString (), href: path + '?page=' + self.model.constants.bnLastPage.toString() + '&network=' + self.model.networkIndex});
+				const aDOMLinkToFirstPage = self.util.createElement('a', {textContent: 'first', href: path + '?page=' + self.model.constants.bnFirstPage.toString() + '&network=' + self.model.networkIndex});
+				const aDOMSeparator1 = self.util.createElement('span', {textContent: ' || '});
+				const aDOMLinkToActualPage = self.util.createElement('a', {textContent: self.model.bnPage.toString(), href: path + '?page=' + self.model.bnPage.toString() + '&network=' + self.model.networkIndex});
+				const aDOMSeparator2 = self.util.createElement('span', {textContent: ' || '});
+				const aDOMLinkToMaxPage = self.util.createElement('a', {textContent: 'last', href: path + '?page=' + self.model.constants.bnLastPage.toString() + '&network=' + self.model.networkIndex});
 				const fragment = document.createDocumentFragment();
-				return self.util.appendChildren(fragment, [aDOMLinkToActualPage, aDOMOutOf, aDOMLinkToMaxPage]);
+				return self.util.appendChildren(fragment, [aDOMLinkToFirstPage, aDOMSeparator1, aDOMLinkToActualPage, aDOMSeparator2, aDOMLinkToMaxPage]);
 			};
 
 			self.showTable = () => {
