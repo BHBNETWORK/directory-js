@@ -100,7 +100,7 @@ let gController = null;
 			self.model = {
 				bnPage: null, // BN of current page.
 				networkIndex: 0,
-				constants:{
+				constants: {
 					bnOne: bitcore.crypto.BN.fromString('1'),
 					bnDelta: bitcore.crypto.BN.fromString('64'),
 					bnFirstPage: bitcore.crypto.BN.fromString('1'),
@@ -109,14 +109,14 @@ let gController = null;
 			};
 			self.model.constants.bnLastPage = self.model.constants.bnLast.div(self.model.constants.bnDelta);
 
-			self.checkPage = (theBN) => {
-				return (theBN.cmp (self.model.constants.bnFirstPage) >= 0) && (theBN.cmp (self.model.constants.bnLastPage) <= 0);
+			self.checkPage = theBN => {
+				return (theBN.cmp(self.model.constants.bnFirstPage) >= 0) && (theBN.cmp(self.model.constants.bnLastPage) <= 0);
 			};
 
 			self.onClickButton = (theButton, theIncrement) => {
 				return function () {
 					const nextBnPage = self.model.bnPage.add(theIncrement);
-					if (true === self.checkPage (nextBnPage)) {
+					if (self.checkPage(nextBnPage) === true) {
 						self.buttonDisable(theButton);
 						self.model.bnPage = nextBnPage;
 						setTimeout(self.showTable, 0);
@@ -135,7 +135,7 @@ let gController = null;
 				};
 			};
 
-			self.buildDOMPageNumber = bnMaxPages => {
+			self.buildDOMPageNumber = () => {
 				const url = new URL(location);
 				const path = url.origin + url.pathname;
 				const aDOMLinkToFirstPage = self.util.createElement('a', {textContent: 'first', href: path + '?page=' + self.model.constants.bnFirstPage.toString() + '&network=' + self.model.networkIndex});
