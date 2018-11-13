@@ -99,13 +99,28 @@ let gController = null;
 			self.network = ['livenet', 'testnet'];
 			self.model = {
 				bnPage: null, // BN of current page.
-				networkIndex: 0
+				networkIndex: 0,
+				constants:{
+					bnOne: bitcore.crypto.BN.fromString('1'),
+					bnDelta: bitcore.crypto.BN.fromString('64'),
+					bnFirstPage: bitcore.crypto.BN.fromString('1'),
+					bnLast: bitcore.crypto.BN.fromString('115792089237316195423570985008687907852837564279074904382605163141518161494336')
+				}
 			};
+			self.model.constants.bnLastPage = self.model.constants.bnLast.div(self.model.constants.bnDelta);
+
+			self.checkPage = (theBN) => {
+				return (theBN.cmp (self.model.constants.bnFirstPage) >= 0) && (theBN.cmp (self.model.constants.bnLastPage) <= 0);
+			};
+
 			self.onClickButton = (theButton, theIncrement) => {
 				return function () {
-					self.buttonDisable(theButton);
-					self.model.bnPage = self.model.bnPage.add(theIncrement);
-					setTimeout(self.showTable, 0);
+					const nextBnPage = self.model.bnPage.add(theIncrement);
+					if (true === self.checkPage (nextBnPage)) {
+						self.buttonDisable(theButton);
+						self.model.bnPage = nextBnPage;
+						setTimeout(self.showTable, 0);
+					}
 				};
 			};
 
@@ -128,15 +143,16 @@ let gController = null;
 				const fragment = document.createDocumentFragment();
 				return self.util.appendChildren(fragment, [aDOMLinkToActualPage, aDOMMaxPages]);
 			};
+
 			self.showTable = () => {
 				const aStartDate = new Date();
-				const bnOne = bitcore.crypto.BN.fromString('1');
-				const bnDelta = bitcore.crypto.BN.fromString('64');
+				const bnOne = self.model.constants.bnOne;
+				const bnDelta = self.model.constants.bnDelta;
 				const bnPage = self.model.bnPage.sub(bnOne);
 				const bnBegin = bnPage.mul(bnDelta).add(bnOne);
 				const bnEnd = bnBegin.add(bnDelta);
-				const bnMaxNumberOfIndex = bitcore.crypto.BN.fromString('115792089237316195423570985008687907852837564279074904382605163141518161494336');
-				const bnMaxPages = bnMaxNumberOfIndex.div(bnDelta);
+				const bnMaxNumberOfIndex = self.model.constants.bnLast;
+				const bnMaxPages = self.model.constants.bnLastPage;
 				const aDOMHeader = self.util.createElement('h2', {textContent: 'Bitcoin private key database'});
 				const aDOMPageNumber = self.util.createElement('li');
 				aDOMPageNumber.appendChild(self.buildDOMPageNumber(bnMaxPages));
