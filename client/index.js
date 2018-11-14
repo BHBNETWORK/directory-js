@@ -202,11 +202,12 @@ let gController = null;
 
 					const buildLiFields = function (element, boolCompressed) {
 					// https://blockchair.com/bitcoin/address/1CK6KHY6MHgYvmRQ4PAafKYDrg1ejbH1cE
+					// https://blockstream.info/address/1CK6KHY6MHgYvmRQ4PAafKYDrg1ejbH1cE // Ci dispiace! Indirizzi con tante transazioni non sono supportate al momento
 						const fieldName = ['extended', 'compressed'];
 
 						const aDOMLiWif = self.util.createElement('li', {textContent: 'wif: ' + element.wif[fieldName[Number(boolCompressed)]]});
 						const aDOMLiAddress = self.util.createElement('li', {textContent: 'address: '});
-						const aDOMHref = self.util.createElement('a', {href: 'https://blockchair.com/bitcoin/address/' + element.address[fieldName[Number(boolCompressed)]], textContent: element.address[fieldName[Number(boolCompressed)]]});
+						const aDOMHref = self.util.createElement('a', {href: 'https://blockstream.info/address/' + element.address[fieldName[Number(boolCompressed)]], textContent: element.address[fieldName[Number(boolCompressed)]]});
 						aDOMLiAddress.appendChild(aDOMHref);
 						return [aDOMLiWif, aDOMLiAddress];
 					};
