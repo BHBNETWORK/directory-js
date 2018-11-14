@@ -12,7 +12,7 @@ Learning `Bitcoin` programming with `JavaScript `and `nodejs` creating an inspir
 
 ## Server: dumping last 3 Bitcoin addresses
 
-```c
+```json
 $ echo '{"offset":{"index":"115792089237316195423570985008687907852837564279074904382605163141518161494334", "base":10}, "delta": 3, "network":"livenet"}' | node server/cmd-dump-keys.js | jq
 [
   {
