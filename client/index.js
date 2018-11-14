@@ -164,9 +164,10 @@ let gController = null;
 
 				const aDOMUlHeader = self.util.createElement('ul');
 				self.util.appendChildren(aDOMUlHeader, [aDOMPageNumber, aDOMKeysPerPage, aDOMNumberOfIndex]);
-				const aPrevButton = self.util.createElement('span', {textContent: '< Previous'}, ['ig_button', 'normal']);
+				const styles = ['disabled', 'normal'];
+				const aPrevButton = self.util.createElement('span', {textContent: '< Previous'}, ['ig_button', styles[(self.model.bnPage.cmp(self.model.constants.bnFirstPage) > 0) | 0]]);
 				aPrevButton.addEventListener('click', self.onClickButton(aPrevButton, bnOne.neg()));
-				const aNextButton = self.util.createElement('span', {textContent: 'Next > '}, ['ig_button', 'normal']);
+				const aNextButton = self.util.createElement('span', {textContent: 'Next > '}, ['ig_button', styles[(self.model.bnPage.cmp(self.model.constants.bnLastPage) < 0) | 0]]);
 				aNextButton.addEventListener('click', self.onClickButton(aNextButton, bnOne));
 
 				const chooseClass = function (theNetworkIndex) {
