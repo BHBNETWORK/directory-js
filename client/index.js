@@ -119,13 +119,17 @@ let gController = null;
 				return (theBN.cmp(self.model.constants.bnFirstPage) >= 0) && (theBN.cmp(self.model.constants.bnLastPage) <= 0);
 			};
 
+			self.showTableWithTimout = theTimeout => {
+				setTimeout(self.showTable, theTimeout);
+			};
+
 			self.onClickButton = (theButton, theIncrement) => {
 				return function () {
 					const nextBnPage = self.model.bnPage.add(theIncrement);
 					if (self.checkPage(nextBnPage) === true) {
 						self.buttonDisable(theButton);
 						self.model.bnPage = nextBnPage;
-						setTimeout(self.showTable, 0);
+						self.showTableWithTimout(0);
 					}
 				};
 			};
@@ -137,7 +141,7 @@ let gController = null;
 					theButton2.classList.remove('ig_button_network_selected');
 					theButton2.classList.add('normal');
 					self.model.networkIndex = theNetworkIndex;
-					setTimeout(self.showTable, 0);
+					self.showTableWithTimout(0);
 				};
 			};
 
@@ -276,7 +280,7 @@ let gController = null;
 				const aNetworkIndexString = self.getOrDefault(params, 'network', '0');
 				self.model.networkIndex = parseInt(aNetworkIndexString, 10);
 
-				setTimeout(self.showTable, 0);
+				self.showTableWithTimout(0);
 			};
 		};
 		gController = new ClassController(new Date());
