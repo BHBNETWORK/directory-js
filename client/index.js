@@ -195,7 +195,7 @@ let gController = null;
 						return 'wif:\t' + element.wif[fieldName[Number(boolCompressed)]] + '\naddress:\t' + element.address[fieldName[Number(boolCompressed)]];
 					};
 
-					const buildLiFieldsIndex = function (element) { // eslint-disable-line no-unused-vars
+					const buildLiFieldsIndex = function (element) {
 						const aDOMLiIndexDec = self.util.createElement('li', {textContent: 'dec: ' + element.index.dec});
 						const aDOMLiIndexHex = self.util.createElement('li', {textContent: 'hex: ' + element.index.hex});
 						return [aDOMLiIndexDec, aDOMLiIndexHex];
