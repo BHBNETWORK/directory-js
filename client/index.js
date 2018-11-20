@@ -85,6 +85,12 @@ let gController = null;
 						theDOM.appendChild(theChild);
 					});
 					return theDOM;
+				},
+				removeChildren(theDOM) {
+				// https://jsperf.com/innerhtml-vs-removechild/15
+					while (theDOM.firstChild) {
+						theDOM.removeChild(theDOM.firstChild);
+					}
 				}
 			};
 			self.buttonDisable = function (theButton) {
@@ -243,7 +249,8 @@ let gController = null;
 					const aDOMDonation = self.util.createElement('div', {textContent: 'It took a lot of computing power to generate this database. Donations welcome: 1ALL13199J1n4cDQ276We3wctwr11xB8Rn'}, ['crono']);
 					const aEndDate = new Date();
 					const aDOMCrono = self.util.createElement('div', {textContent: 'ticks: ' + (aEndDate - aStartDate)}, ['crono']);
-					aDOMTableWrapper.innerHTML = null;
+
+					self.util.removeChildren(aDOMTableWrapper);
 					self.util.appendChildren(aDOMTableWrapper, [aDOMHeader, aDOMUlHeader, aPrevButton, aNextButton, aLivenetButton, aTestnetButton]);
 					self.util.appendChildren(aDOMTableWrapper, [aDOMCrono, aDOMContent, aDOMDonation]);
 				}, 0);
