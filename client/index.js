@@ -110,7 +110,8 @@ let gController = null;
 					bnOne: bitcore.crypto.BN.fromString('1'),
 					bnDelta: bitcore.crypto.BN.fromString('64'),
 					bnFirstPage: bitcore.crypto.BN.fromString('1'),
-					bnLast: bitcore.crypto.BN.fromString('115792089237316195423570985008687907852837564279074904382605163141518161494336')
+					bnLast: bitcore.crypto.BN.fromString('115792089237316195423570985008687907852837564279074904382605163141518161494336'),
+					url: new URL(location)
 				}
 			};
 			self.model.constants.bnLastPage = self.model.constants.bnLast.div(self.model.constants.bnDelta);
@@ -145,14 +146,16 @@ let gController = null;
 				};
 			};
 
+			self.buildPageLink = (textContent, page) => {
+				return self.util.createElement('a', {textContent, href: self.model.constants.url.origin + self.model.constants.url.pathname + '?page=' + page + '&network=' + self.model.networkIndex});
+			};
+
 			self.buildDOMPageNumber = () => {
-				const url = new URL(location);
-				const path = url.origin + url.pathname;
-				const aDOMLinkToFirstPage = self.util.createElement('a', {textContent: 'first', href: path + '?page=' + self.model.constants.bnFirstPage.toString() + '&network=' + self.model.networkIndex});
+				const aDOMLinkToFirstPage = self.buildPageLink('first', self.model.constants.bnFirstPage.toString());
 				const aDOMSeparator1 = self.util.createElement('span', {textContent: ' || '});
-				const aDOMLinkToActualPage = self.util.createElement('a', {textContent: self.model.bnPage.toString(), href: path + '?page=' + self.model.bnPage.toString() + '&network=' + self.model.networkIndex});
+				const aDOMLinkToActualPage = self.buildPageLink(self.model.bnPage.toString(), self.model.bnPage.toString());
 				const aDOMSeparator2 = self.util.createElement('span', {textContent: ' || '});
-				const aDOMLinkToMaxPage = self.util.createElement('a', {textContent: 'last', href: path + '?page=' + self.model.constants.bnLastPage.toString() + '&network=' + self.model.networkIndex});
+				const aDOMLinkToMaxPage = self.buildPageLink('last', self.model.constants.bnLastPage.toString());
 				const fragment = document.createDocumentFragment();
 				return self.util.appendChildren(fragment, [aDOMLinkToFirstPage, aDOMSeparator1, aDOMLinkToActualPage, aDOMSeparator2, aDOMLinkToMaxPage]);
 			};
