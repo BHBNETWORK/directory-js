@@ -52,11 +52,13 @@ let gController = null;
 					const aPrivateKeyExtended = new bitcore.PrivateKey({bn: theBNIndex, compressed: false, network: theNetwork});
 					const aWIFExtended = aPrivateKeyExtended.toWIF();
 					const aAddressExtended = aPrivateKeyExtended.toAddress();
+					const aPublicKeyExtended = bitcore.PublicKey(aPrivateKeyExtended); // eslint-disable-line new-cap
 
 					// Compressed
 					const aPrivateKeyCompressed = new bitcore.PrivateKey({bn: theBNIndex, compressed: true, network: theNetwork});
 					const aWIFCompressed = aPrivateKeyCompressed.toWIF();
 					const aAddressCompressed = aPrivateKeyCompressed.toAddress();
+					const aPublicKeyCompressed = bitcore.PublicKey(aPrivateKeyCompressed); // eslint-disable-line new-cap
 
 					self.util.assert(aPrivateKeyExtended.toString() === aPrivateKeyCompressed.toString());
 
@@ -72,6 +74,10 @@ let gController = null;
 						wif: {
 							extended: aWIFExtended.toString(),
 							compressed: aWIFCompressed.toString()
+						},
+						pub: {
+							extended: aPublicKeyExtended.toString(),
+							compressed: aPublicKeyCompressed.toString()
 						},
 						address: {
 							extended: aAddressExtended.toString(),
@@ -218,11 +224,12 @@ let gController = null;
 					// https://blockchair.com/bitcoin/address/1CK6KHY6MHgYvmRQ4PAafKYDrg1ejbH1cE
 						const fieldName = ['extended', 'compressed'];
 
+						const aDOMLiPub = self.util.createElement('li', {textContent: 'pub: ' + element.pub[fieldName[Number(boolCompressed)]]});
 						const aDOMLiWif = self.util.createElement('li', {textContent: 'wif: ' + element.wif[fieldName[Number(boolCompressed)]]});
 						const aDOMLiAddress = self.util.createElement('li', {textContent: 'address: '});
 						const aDOMHref = self.util.createElement('a', {href: 'https://blockchair.com/bitcoin/address/' + element.address[fieldName[Number(boolCompressed)]], textContent: element.address[fieldName[Number(boolCompressed)]]});
 						aDOMLiAddress.appendChild(aDOMHref);
-						return [aDOMLiWif, aDOMLiAddress];
+						return [aDOMLiPub, aDOMLiWif, aDOMLiAddress];
 					};
 					const styles = ['background-darkgray', 'background-gray', 'background-lightgray'];
 					const aDOMTrs = results.map((element, index) => {
