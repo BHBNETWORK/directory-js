@@ -254,12 +254,16 @@ let gController = null;
 						self.buttonEnable(theButton);
 					});
 					const aDOMDonation = self.util.createElement('div', {textContent: 'It took a lot of computing power to generate this database. Donations welcome: 1ALL13199J1n4cDQ276We3wctwr11xB8Rn'}, ['crono']);
-					const aEndDate = new Date();
-					const aDOMCrono = self.util.createElement('div', {textContent: 'ticks: ' + (aEndDate - aStartDate)}, ['crono']);
+					const aDOMCrono = self.util.createElement('div', {textContent: 'ticks: …'}, ['crono']);
 
 					self.util.removeChildren(aDOMTableWrapper);
 					self.util.appendChildren(aDOMTableWrapper, [aDOMHeader, aDOMUlHeader, aPrevButton, aNextButton, aLivenetButton, aTestnetButton]);
 					self.util.appendChildren(aDOMTableWrapper, [aDOMCrono, aDOMContent, aDOMDonation]);
+
+					setTimeout(() => {
+						const aEndDate = new Date();
+						aDOMCrono.textContent = 'ticks: ' + (aEndDate - aStartDate);
+					}, 0);
 				}, 0);
 			};
 
