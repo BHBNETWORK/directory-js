@@ -102,11 +102,11 @@ let gController = null;
 				theButton.classList.remove('busy');
 				theButton.classList.add('normal');
 			};
-			self.network = ['livenet', 'testnet'];
 			self.model = {
 				bnPage: null, // BN of current page.
 				networkIndex: 0,
 				constants: {
+					network: ['livenet', 'testnet'],
 					bnOne: bitcore.crypto.BN.fromString('1'),
 					bnDelta: bitcore.crypto.BN.fromString('64'),
 					bnFirstPage: bitcore.crypto.BN.fromString('1'),
@@ -201,7 +201,7 @@ let gController = null;
 						bn.push(bnIter);
 					}
 					const results = bn.map(theIndex => {
-						return self.util.createAddressFromBNIndex(theIndex, self.network[self.model.networkIndex]);
+						return self.util.createAddressFromBNIndex(theIndex, self.model.constants.network[self.model.networkIndex]);
 					});
 					const buildField = function (element, boolCompressed) { // eslint-disable-line no-unused-vars
 						const fieldName = ['extended', 'compressed'];
