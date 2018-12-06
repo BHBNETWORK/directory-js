@@ -1,6 +1,6 @@
 # Directory-js
 
-Learning `Bitcoin` programming with `JavaScript `and `nodejs` creating an inspired by http://directory.io project.
+Learning `Bitcoin` programming with `JavaScript `and `nodejs` creating an inspired by [directory.io](https://github.com/isghe/directory.io/tree/isghe) project.
 
 * [Server](server/README.md)
 * [Client](client/README.md)
