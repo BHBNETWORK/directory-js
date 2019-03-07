@@ -1,15 +1,18 @@
 # Directory-js
 
-Learning `Bitcoin` programming with `JavaScript `and `nodejs` creating an inspired by http://directory.io project.
+Learning `Bitcoin` programming with `JavaScript `and `nodejs` creating an inspired by [directory.io](https://github.com/isghe/directory.io/tree/isghe) project.
 
 * [Server](server/README.md)
 * [Client](client/README.md)
 
 # Examples
 
-## Dumping last 3 Bitcoin addresses
+* [Server: dumping last 3 Bitcoin addresses](#server-dumping-last-3-Bitcoin-addresses)
+* [Client: Bitcoin last page](#client-bitcoin-last-page)
 
-```c
+## Server: dumping last 3 Bitcoin addresses
+
+```json
 $ echo '{"offset":{"index":"115792089237316195423570985008687907852837564279074904382605163141518161494334", "base":10}, "delta": 3, "network":"livenet"}' | node server/cmd-dump-keys.js | jq
 [
   {
@@ -81,3 +84,10 @@ $ echo '{"offset":{"index":"1157920892373161954235709850086879078528375642790749
 ]
 
 ```
+
+## Client: Bitcoin last page
+
+Client side only JavaScript (no server side involved):
+
+![Biitcoin last page](images/bitcoin_last_page.png)
+_screenshot of [bitcoin-last-page](https://tinyurl.com/bitcoin-last-page)_

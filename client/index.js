@@ -85,6 +85,12 @@ let gController = null;
 						theDOM.appendChild(theChild);
 					});
 					return theDOM;
+				},
+				removeChildren(theDOM) {
+				// https://jsperf.com/innerhtml-vs-removechild/15
+					while (theDOM.firstChild) {
+						theDOM.removeChild(theDOM.firstChild);
+					}
 				}
 			};
 			self.buttonDisable = function (theButton) {
@@ -96,15 +102,16 @@ let gController = null;
 				theButton.classList.remove('busy');
 				theButton.classList.add('normal');
 			};
-			self.network = ['livenet', 'testnet'];
 			self.model = {
 				bnPage: null, // BN of current page.
 				networkIndex: 0,
 				constants: {
+					network: ['livenet', 'testnet'],
 					bnOne: bitcore.crypto.BN.fromString('1'),
 					bnDelta: bitcore.crypto.BN.fromString('64'),
 					bnFirstPage: bitcore.crypto.BN.fromString('1'),
-					bnLast: bitcore.crypto.BN.fromString('115792089237316195423570985008687907852837564279074904382605163141518161494336')
+					bnLast: bitcore.crypto.BN.fromString('115792089237316195423570985008687907852837564279074904382605163141518161494336'),
+					url: new URL(location)
 				}
 			};
 			self.model.constants.bnLastPage = self.model.constants.bnLast.div(self.model.constants.bnDelta);
@@ -113,13 +120,17 @@ let gController = null;
 				return (theBN.cmp(self.model.constants.bnFirstPage) >= 0) && (theBN.cmp(self.model.constants.bnLastPage) <= 0);
 			};
 
+			self.showTableWithTimout = theTimeout => {
+				setTimeout(self.showTable, theTimeout);
+			};
+
 			self.onClickButton = (theButton, theIncrement) => {
 				return function () {
 					const nextBnPage = self.model.bnPage.add(theIncrement);
 					if (self.checkPage(nextBnPage) === true) {
 						self.buttonDisable(theButton);
 						self.model.bnPage = nextBnPage;
-						setTimeout(self.showTable, 0);
+						self.showTableWithTimout(0);
 					}
 				};
 			};
@@ -131,18 +142,20 @@ let gController = null;
 					theButton2.classList.remove('ig_button_network_selected');
 					theButton2.classList.add('normal');
 					self.model.networkIndex = theNetworkIndex;
-					setTimeout(self.showTable, 0);
+					self.showTableWithTimout(0);
 				};
 			};
 
+			self.buildPageLink = (textContent, page) => {
+				return self.util.createElement('a', {textContent, href: self.model.constants.url.origin + self.model.constants.url.pathname + '?page=' + page + '&network=' + self.model.networkIndex});
+			};
+
 			self.buildDOMPageNumber = () => {
-				const url = new URL(location);
-				const path = url.origin + url.pathname;
-				const aDOMLinkToFirstPage = self.util.createElement('a', {textContent: 'first', href: path + '?page=' + self.model.constants.bnFirstPage.toString() + '&network=' + self.model.networkIndex});
+				const aDOMLinkToFirstPage = self.buildPageLink('first', self.model.constants.bnFirstPage.toString());
 				const aDOMSeparator1 = self.util.createElement('span', {textContent: ' || '});
-				const aDOMLinkToActualPage = self.util.createElement('a', {textContent: self.model.bnPage.toString(), href: path + '?page=' + self.model.bnPage.toString() + '&network=' + self.model.networkIndex});
+				const aDOMLinkToActualPage = self.buildPageLink(self.model.bnPage.toString(), self.model.bnPage.toString());
 				const aDOMSeparator2 = self.util.createElement('span', {textContent: ' || '});
-				const aDOMLinkToMaxPage = self.util.createElement('a', {textContent: 'last', href: path + '?page=' + self.model.constants.bnLastPage.toString() + '&network=' + self.model.networkIndex});
+				const aDOMLinkToMaxPage = self.buildPageLink('last', self.model.constants.bnLastPage.toString());
 				const fragment = document.createDocumentFragment();
 				return self.util.appendChildren(fragment, [aDOMLinkToFirstPage, aDOMSeparator1, aDOMLinkToActualPage, aDOMSeparator2, aDOMLinkToMaxPage]);
 			};
@@ -164,9 +177,10 @@ let gController = null;
 
 				const aDOMUlHeader = self.util.createElement('ul');
 				self.util.appendChildren(aDOMUlHeader, [aDOMPageNumber, aDOMKeysPerPage, aDOMNumberOfIndex]);
-				const aPrevButton = self.util.createElement('span', {textContent: '< Previous'}, ['ig_button', 'normal']);
+				const styles = ['disabled', 'normal'];
+				const aPrevButton = self.util.createElement('span', {textContent: '< Previous'}, ['ig_button', styles[(self.model.bnPage.cmp(self.model.constants.bnFirstPage) > 0) | 0]]);
 				aPrevButton.addEventListener('click', self.onClickButton(aPrevButton, bnOne.neg()));
-				const aNextButton = self.util.createElement('span', {textContent: 'Next > '}, ['ig_button', 'normal']);
+				const aNextButton = self.util.createElement('span', {textContent: 'Next > '}, ['ig_button', styles[(self.model.bnPage.cmp(self.model.constants.bnLastPage) < 0) | 0]]);
 				aNextButton.addEventListener('click', self.onClickButton(aNextButton, bnOne));
 
 				const chooseClass = function (theNetworkIndex) {
@@ -187,16 +201,16 @@ let gController = null;
 						bn.push(bnIter);
 					}
 					const results = bn.map(theIndex => {
-						return self.util.createAddressFromBNIndex(theIndex, self.network[self.model.networkIndex]);
+						return self.util.createAddressFromBNIndex(theIndex, self.model.constants.network[self.model.networkIndex]);
 					});
 					const buildField = function (element, boolCompressed) { // eslint-disable-line no-unused-vars
 						const fieldName = ['extended', 'compressed'];
 						return 'wif:\t' + element.wif[fieldName[Number(boolCompressed)]] + '\naddress:\t' + element.address[fieldName[Number(boolCompressed)]];
 					};
 
-					const buildLiFieldsIndex = function (element) { // eslint-disable-line no-unused-vars
+					const buildLiFieldsIndex = function (element) {
 						const aDOMLiIndexDec = self.util.createElement('li', {textContent: 'dec: ' + element.index.dec});
-						const aDOMLiIndexHex = self.util.createElement('li', {textContent: 'hex: ' + element.index.hex});
+						const aDOMLiIndexHex = self.util.createElement('li', {textContent: 'hex: 0x' + element.index.hex});
 						return [aDOMLiIndexDec, aDOMLiIndexHex];
 					};
 
@@ -241,11 +255,16 @@ let gController = null;
 						self.buttonEnable(theButton);
 					});
 					const aDOMDonation = self.util.createElement('div', {textContent: 'It took a lot of computing power to generate this database. Donations welcome: 1ALL13199J1n4cDQ276We3wctwr11xB8Rn'}, ['crono']);
-					const aEndDate = new Date();
-					const aDOMCrono = self.util.createElement('div', {textContent: 'ticks: ' + (aEndDate - aStartDate)}, ['crono']);
-					aDOMTableWrapper.innerHTML = null;
+					const aDOMCrono = self.util.createElement('div', {textContent: 'ticks: …'}, ['crono']);
+
+					self.util.removeChildren(aDOMTableWrapper);
 					self.util.appendChildren(aDOMTableWrapper, [aDOMHeader, aDOMUlHeader, aPrevButton, aNextButton, aLivenetButton, aTestnetButton]);
 					self.util.appendChildren(aDOMTableWrapper, [aDOMCrono, aDOMContent, aDOMDonation]);
+
+					setTimeout(() => {
+						const aEndDate = new Date();
+						aDOMCrono.textContent = 'ticks: ' + (aEndDate - aStartDate);
+					}, 0);
 				}, 0);
 			};
 
@@ -269,7 +288,7 @@ let gController = null;
 				const aNetworkIndexString = self.getOrDefault(params, 'network', '0');
 				self.model.networkIndex = parseInt(aNetworkIndexString, 10);
 
-				setTimeout(self.showTable, 0);
+				self.showTableWithTimout(0);
 			};
 		};
 		gController = new ClassController(new Date());

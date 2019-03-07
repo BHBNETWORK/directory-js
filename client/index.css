@@ -53,6 +53,11 @@ td{
 	background: lightgray;
 }
 
+.disabled{
+	color: gray;
+	background: white;
+}
+
 .ig_button{
 	margin: 0.5em;
 	border-radius:8px;
