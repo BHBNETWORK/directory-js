@@ -1,5 +1,10 @@
 # Directory-js - Server - Test
 
+* [test-bitcoinjs-lib.js](#test-bitcoinjs-lib.js)
+* [test-bitcore.js](#test-bitcore.js)
+* [test-http-server.js](#test-http-server.js)
+* [calculate-number-of-universal-age.js](#calculate-number-of-universal-age.js)
+
 ## test-bitcoinjs-lib.js
 ```
 $ node test/test-bitcoinjs-lib.js
