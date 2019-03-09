@@ -5,7 +5,11 @@ Creating a [directory.io](https://github.com/isghe/directory.io/tree/isghe) webs
 ## Install
 
 * Install bower
-* Install bitcore-lib `bower install bitcore-lib`
+* Install dependencies (actually only `bitcore-lib`):
+
+```
+bower install
+```
 
 ## Open
 
