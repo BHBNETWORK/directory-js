@@ -8,12 +8,12 @@ const main = () => {
 	const population = bitcore.crypto.BN.fromString('10000000000'); // 10 miliardi
 	const factorPerPerson = bitcore.crypto.BN.fromString('1000000000'); // 1 miliardo
 	const doubleHashRate = bitcore.crypto.BN.fromString('100000000000000000'); // 100 mila tera hash/s
-	const globalHashingPower = population.mul(factorPerPerson.mul(doubleHashRate));
-	const seconds = addresses.div(globalHashingPower);
-	const secondsPerYearBN = bitcore.crypto.BN.fromString(String(3600 * 24 * 365.25));
-	const years = seconds.div(secondsPerYearBN);
+	const globalHashingPower = population.mul(factorPerPerson.mul(doubleHashRate)); // population * factorPerPerson * doubleHashRate
+	const seconds = addresses.div(globalHashingPower); // addresses / globalHashingPower
+	const secondsPerYearBN = bitcore.crypto.BN.fromString(String(3600 * 24 * 365.25)); // seconds per year
+	const years = seconds.div(secondsPerYearBN); // seconds / secondsPerYearBN
 	const universeAge = bitcore.crypto.BN.fromString(String(13.82 * 1000000000)); // https://it.wikipedia.org/wiki/Età_dell'universo
-	const numberOfUniversalAge = years.div(universeAge);
+	const numberOfUniversalAge = years.div(universeAge); // years / universeAge
 	console.log(JSON.stringify({
 		addresses: addresses.toString(),
 		globalHashingPower: globalHashingPower.toString(),
