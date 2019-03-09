@@ -1,6 +1,6 @@
 # Directory-js - Client
 
-Creating a directory.io website, just serving a `static` website
+Creating a [directory.io](https://github.com/isghe/directory.io/tree/isghe) website, just serving a `static` website
 
 ## Install
 
