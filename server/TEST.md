@@ -63,3 +63,15 @@ url-parse:
         "debug": "true"
 }
 ```
+
+## calculate-number-of-universal-age.js
+```
+$ node server/test/calculate-number-of-universal-age.js | jq
+{
+  "addresses": "115792089237316195423570985008687907852837564279074904382605163141518161494336",
+  "globalHashingPower": "1000000000000000000000000000000000000",
+  "years": "3669229891921952094695762193851494",
+  "universeAge": "13820000000",
+  "numberOfUniversalAge": "265501439357594218140069"
+}
+```
