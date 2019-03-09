@@ -13,13 +13,13 @@ const main = () => {
 	const secondsPerYearBN = bitcore.crypto.BN.fromString(String(3600 * 24 * 365.25)); // seconds per year
 	const years = seconds.div(secondsPerYearBN); // seconds / secondsPerYearBN
 	const universeAge = bitcore.crypto.BN.fromString(String(13.82 * 1000000000)); // https://it.wikipedia.org/wiki/Età_dell'universo
-	const numberOfUniversalAge = years.div(universeAge); // years / universeAge
+	const numberOfUniverseAge = years.div(universeAge); // years / universeAge
 	console.log(JSON.stringify({
 		addresses: addresses.toString(),
 		globalHashingPower: globalHashingPower.toString(),
 		years: years.toString(),
 		universeAge: universeAge.toString(),
-		numberOfUniversalAge: numberOfUniversalAge.toString()
+		numberOfUniversalAge: numberOfUniverseAge.toString()
 	}));
 };
 
