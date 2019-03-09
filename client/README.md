@@ -8,10 +8,12 @@ Creating a [directory.io](https://github.com/isghe/directory.io/tree/isghe) webs
 * Install dependencies (actually only `bitcore-lib`):
 
 ```
-bower install
+$ bower install
 ```
 
 ## Open
 
-* `open index.html`
+```
+$ open index.html`
+````
 * [directory-js](https://bhbnetwork.github.io/directory-js)

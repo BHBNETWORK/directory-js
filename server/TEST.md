@@ -2,13 +2,13 @@
 
 ## test-bitcoinjs-lib.js
 ```
-node test/test-bitcoinjs-lib.js
+$ node test/test-bitcoinjs-lib.js
 bitcoinjs-lib 'testRandomAddress' ok
 ```
 
 ## test-bitcore.js
 ```
-node test/test-bitcore.js 
+$ node test/test-bitcore.js 
 { reference: 
    { index: '1',
      wif: '5HpHagT65TZzG1PH3CSu63k8DbpvD8s5ip4nEB3kEsreAnchuDf',
@@ -50,13 +50,13 @@ test-bitcore-lib ok
 
 ## test-http-server.js
 ```
-node test/test-http-server.js
+$ node test/test-http-server.js
 ```
 
 http://localhost:9615/?index=668&debug=true
 
 ```
-curl "http://localhost:9615/?index=668&debug=true"
+$ curl "http://localhost:9615/?index=668&debug=true"
 url-parse:
 {
         "index": "668",
