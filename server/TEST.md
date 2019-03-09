@@ -7,12 +7,18 @@
 * [cmd-dump-keys.js](#cmd-dump-keysjs)
 
 ## test-bitcoinjs-lib.js
+
+[test-bitcoinjs-lib.js](test/test-bitcoinjs-lib.js)
+
 ```
 $ node test/test-bitcoinjs-lib.js
 bitcoinjs-lib 'testRandomAddress' ok
 ```
 
 ## test-bitcore.js
+
+[test-bitcore.js](test/test-bitcore.js)
+
 ```
 $ node test/test-bitcore.js
 { reference:
@@ -55,6 +61,9 @@ test-bitcore-lib ok
 ```
 
 ## test-http-server.js
+
+[test-http-server.js](test/test-http-server.js)
+
 ```
 $ node test/test-http-server.js
 ```
@@ -71,6 +80,9 @@ url-parse:
 ```
 
 ## calculate-number-of-universal-age.js
+
+[calculate-number-of-universal-age.js](test/calculate-number-of-universal-age.js)
+
 ```
 $ node server/test/calculate-number-of-universal-age.js | jq
 {
@@ -83,6 +95,8 @@ $ node server/test/calculate-number-of-universal-age.js | jq
 ```
 
 ## cmd-dump-keys.js
+
+[cmd-dump-keys.js](../server/cmd-dump-keys.js)
 
 ```
 echo '{"offset":{"index":"1157920892289", "base":10}, "delta": 64, "network":"livenet"}' | node server/cmd-dump-keys.js | jq
