@@ -1,9 +1,9 @@
 # Directory-js - Server - Test
 
-* [test-bitcoinjs-lib.js](#test-bitcoinjs-lib.js)
-* [test-bitcore.js](#test-bitcore.js)
-* [test-http-server.js](#test-http-server.js)
-* [calculate-number-of-universal-age.js](#calculate-number-of-universal-age.js)
+* [test-bitcoinjs-lib.js](#test-bitcoinjs-libjs)
+* [test-bitcore.js](#test-bitcorejs)
+* [test-http-server.js](#test-http-serverjs)
+* [calculate-number-of-universal-age.js](#calculate-number-of-universal-agejs)
 
 ## test-bitcoinjs-lib.js
 ```
