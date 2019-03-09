@@ -20,6 +20,7 @@ let gController = null;
 							ret.push(aProperty);
 						}
 					}
+
 					return ret;
 				},
 				createElement(theTag, theProperties, theClassList) {
@@ -29,11 +30,13 @@ let gController = null;
 							ret[theProperty] = theProperties[theProperty];
 						});
 					}
+
 					if ((typeof undefined !== typeof theClassList) && (theClassList !== null)) {
 						theClassList.forEach(theClass => {
 							ret.classList.add(theClass);
 						});
 					}
+
 					return ret;
 				},
 				createAddressFromBNIndexOld(theBNIndex) {
@@ -82,7 +85,7 @@ let gController = null;
 				},
 				appendChildren(theDOM, theChildren) {
 					theChildren.forEach(theChild => {
-						theDOM.appendChild(theChild);
+						theDOM.append(theChild);
 					});
 					return theDOM;
 				},
@@ -102,6 +105,7 @@ let gController = null;
 				theButton.classList.remove('busy');
 				theButton.classList.add('normal');
 			};
+
 			self.model = {
 				bnPage: null, // BN of current page.
 				networkIndex: 0,
@@ -162,8 +166,8 @@ let gController = null;
 
 			self.showTable = () => {
 				const aStartDate = new Date();
-				const bnOne = self.model.constants.bnOne;
-				const bnDelta = self.model.constants.bnDelta;
+				const {bnOne} = self.model.constants;
+				const {bnDelta} = self.model.constants;
 				const bnPage = self.model.bnPage.sub(bnOne);
 				const bnBegin = bnPage.mul(bnDelta).add(bnOne);
 				const bnEnd = bnBegin.add(bnDelta);
@@ -171,7 +175,7 @@ let gController = null;
 				const bnMaxPages = self.model.constants.bnLastPage;
 				const aDOMHeader = self.util.createElement('h2', {textContent: 'Bitcoin private key database'});
 				const aDOMPageNumber = self.util.createElement('li');
-				aDOMPageNumber.appendChild(self.buildDOMPageNumber(bnMaxPages));
+				aDOMPageNumber.append(self.buildDOMPageNumber(bnMaxPages));
 				const aDOMKeysPerPage = self.util.createElement('li', {textContent: 'Private keys per page: ' + bnDelta.toString()});
 				const aDOMNumberOfIndex = self.util.createElement('li', {textContent: 'Total: ' + bnMaxNumberOfIndex.toString() + ' private keys'});
 
@@ -187,12 +191,13 @@ let gController = null;
 					const kVect = ['normal', 'ig_button_network_selected'];
 					return kVect[Number(self.model.networkIndex === theNetworkIndex)];
 				};
+
 				const aLivenetButton = self.util.createElement('span', {textContent: 'Livenet'}, ['ig_button_network', 'ig_button_network_left', chooseClass(0)]);
 				const aTestnetButton = self.util.createElement('span', {textContent: 'Testnet'}, ['ig_button_network', 'ig_button_network_right', chooseClass(1)]);
 				aLivenetButton.addEventListener('click', self.onClickButtonNetwork(aLivenetButton, aTestnetButton, 0));
 				aTestnetButton.addEventListener('click', self.onClickButtonNetwork(aTestnetButton, aLivenetButton, 1));
 
-				const aDOMTableWrapper = document.getElementById('tableWrapper');
+				const aDOMTableWrapper = document.querySelector('#tableWrapper');
 				const aDOMContent = self.util.createElement('table');
 
 				setTimeout(() => {
@@ -200,6 +205,7 @@ let gController = null;
 					for (let bnIter = bnBegin; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
 						bn.push(bnIter);
 					}
+
 					const results = bn.map(theIndex => {
 						return self.util.createAddressFromBNIndex(theIndex, self.model.constants.network[self.model.networkIndex]);
 					});
@@ -222,9 +228,10 @@ let gController = null;
 						const aDOMLiWif = self.util.createElement('li', {textContent: 'wif: ' + element.wif[fieldName[Number(boolCompressed)]]});
 						const aDOMLiAddress = self.util.createElement('li', {textContent: 'address: '});
 						const aDOMHref = self.util.createElement('a', {target: '_blank', href: 'https://blockstream.info/' + network[self.model.networkIndex] + 'address/' + element.address[fieldName[Number(boolCompressed)]], textContent: element.address[fieldName[Number(boolCompressed)]]});
-						aDOMLiAddress.appendChild(aDOMHref);
+						aDOMLiAddress.append(aDOMHref);
 						return [aDOMLiWif, aDOMLiAddress];
 					};
+
 					const styles = ['background-darkgray', 'background-gray', 'background-lightgray'];
 					const aDOMTrs = results.map((element, index) => {
 						const aDOMTds = [
@@ -236,7 +243,7 @@ let gController = null;
 							const aDOMUl = self.util.createElement('ul');
 							self.util.appendChildren(aDOMUl, theLiFields);
 
-							aDOMTd.appendChild(aDOMUl);
+							aDOMTd.append(aDOMUl);
 							return aDOMTd;
 						});
 						const aDOMTr = self.util.createElement('tr', null, [styles[index % (styles.length)]]);
@@ -248,7 +255,7 @@ let gController = null;
 					});
 					const aDOMTr = self.util.createElement('tr');
 					self.util.appendChildren(aDOMTr, aDOMThs);
-					aDOMContent.appendChild(aDOMTr);
+					aDOMContent.append(aDOMTr);
 					self.util.appendChildren(aDOMContent, aDOMTrs);
 					// ADOMContent.innerHTML = JSON.stringify(results, null, 8);
 					[aPrevButton, aNextButton].forEach(theButton => {
@@ -273,6 +280,7 @@ let gController = null;
 				if (ret === null) {
 					ret = defaultValue;
 				}
+
 				return ret;
 			};
 
@@ -291,6 +299,7 @@ let gController = null;
 				self.showTableWithTimout(0);
 			};
 		};
+
 		gController = new ClassController(new Date());
 		gController.show();
 	});
