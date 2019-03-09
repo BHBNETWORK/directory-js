@@ -216,7 +216,7 @@ let gController = null;
 
 					const buildLiFields = function (element, boolCompressed) {
 					// https://blockchair.com/bitcoin/address/1CK6KHY6MHgYvmRQ4PAafKYDrg1ejbH1cE
-					// https://blockstream.info/address/1CK6KHY6MHgYvmRQ4PAafKYDrg1ejbH1cE // Ci dispiace! Indirizzi con tante transazioni non sono supportate al momento
+					// https://blockstream.info/address/1CK6KHY6MHgYvmRQ4PAafKYDrg1ejbH1cE // Fixed, it was: "Ci dispiace! Indirizzi con tante transazioni non sono supportate al momento"
 						const fieldName = ['extended', 'compressed'];
 
 						const aDOMLiWif = self.util.createElement('li', {textContent: 'wif: ' + element.wif[fieldName[Number(boolCompressed)]]});
