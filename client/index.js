@@ -155,7 +155,12 @@ let gController = null;
 			};
 
 			self.buildPageLink = (textContent, page) => {
-				return self.util.createElement('a', {textContent, href: self.model.constants.url.origin + self.model.constants.url.pathname + '?page=' + page + '&network=' + self.model.networkIndex});
+				let {origin} = self.model.constants.url;
+				if (origin === 'null') {
+					origin = 'file://';
+				}
+
+				return self.util.createElement('a', {textContent, href: origin + self.model.constants.url.pathname + '?page=' + page + '&network=' + self.model.networkIndex});
 			};
 
 			self.buildDOMPageNumber = () => {
@@ -294,7 +299,12 @@ let gController = null;
 
 			self.show = () => {
 				const url = new URL(location);
-				const path = url.origin + url.pathname;
+				let {origin} = url;
+				if (origin === 'null') {
+					origin = 'file://';
+				}
+
+				const path = origin + url.pathname;
 				console.log(path);
 				const params = url.searchParams;
 
