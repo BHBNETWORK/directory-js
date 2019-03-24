@@ -120,6 +120,10 @@ let gController = null;
 			};
 			self.model.constants.bnLastPage = self.model.constants.bnLast.div(self.model.constants.bnDelta);
 
+			if (!self.model.constants.bnLast.mod(self.model.constants.bnDelta).isZero()) {
+				self.model.constants.bnLastPage = self.model.constants.bnLastPage.add(self.model.constants.bnOne);
+			}
+
 			self.checkPage = theBN => {
 				return (theBN.cmp(self.model.constants.bnFirstPage) >= 0) && (theBN.cmp(self.model.constants.bnLastPage) <= 0);
 			};
@@ -170,7 +174,11 @@ let gController = null;
 				const {bnDelta} = self.model.constants;
 				const bnPage = self.model.bnPage.sub(bnOne);
 				const bnBegin = bnPage.mul(bnDelta).add(bnOne);
-				const bnEnd = bnBegin.add(bnDelta);
+				let bnEnd = bnBegin.add(bnDelta);
+				if (bnEnd.gt(self.model.constants.bnLast)) {
+					bnEnd = self.model.constants.bnLast.add(self.model.constants.bnOne);
+				}
+
 				const bnMaxNumberOfIndex = self.model.constants.bnLast;
 				const bnMaxPages = self.model.constants.bnLastPage;
 				const aDOMHeader = self.util.createElement('h2', {textContent: 'Bitcoin private key database'});
