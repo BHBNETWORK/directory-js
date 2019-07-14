@@ -215,7 +215,7 @@ let gController = null;
 
 				setTimeout(() => {
 					const bn = [];
-					const random = true;
+					const random = false;
 					for (let bnIter = bnBegin; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
 						if (random) {
 							const aRandomKey = new bitcore.PrivateKey();
