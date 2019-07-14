@@ -215,8 +215,15 @@ let gController = null;
 
 				setTimeout(() => {
 					const bn = [];
+					const random = true;
 					for (let bnIter = bnBegin; bnIter.lt(bnEnd); bnIter = bnIter.add(bnOne)) {
-						bn.push(bnIter);
+						if (random) {
+							const aRandomKey = new bitcore.PrivateKey();
+							const aRandomBn = bitcore.crypto.BN.fromString(aRandomKey.bn.toString());
+							bn.push(aRandomBn);
+						} else {
+							bn.push(bnIter);
+						}
 					}
 
 					const results = bn.map(theIndex => {
