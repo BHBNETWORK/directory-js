@@ -90,4 +90,4 @@ $ echo '{"offset":{"index":"1157920892373161954235709850086879078528375642790749
 Client side only JavaScript (no server side involved):
 
 ![Biitcoin last page](images/bitcoin_last_page.png)
-_screenshot of [bitcoin-last-page](https://tinyurl.com/bitcoin-last-page)_
+_screenshot of [bitcoin-last](https://tinyurl.com/bitcoin-last)_
