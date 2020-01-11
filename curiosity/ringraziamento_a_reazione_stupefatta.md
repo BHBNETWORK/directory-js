@@ -1,7 +1,7 @@
 
 # Ringraziamento a reazione stupefatta
 
-Intanto mostrando un semplice programmino, di poche righe, scritto da me per motivi didattici, [bitcoin-last-page](https://tinyurl.com/bitcoin-last-page) ho ricevuto diverse critiche (oltre ad insulti) da uno sprovveduto presunto illuminato dalla blockchain, di cui non vi faccio il nome, per elevate ragioni di sicurezza operativa. A cui ho risposto, in modo pubblico (quindi potete divulgarlo) in questo, pacato modo:
+Intanto mostrando un semplice programmino, di poche righe, scritto da me per motivi didattici, [bitcoin-last-page](https://isidoroghezzi.bitbucket.io/directory-js/?page=1809251394333065553493296640760748560200586941860545380978205674086221273349&network=0) ho ricevuto diverse critiche (oltre ad insulti) da uno sprovveduto presunto illuminato dalla blockchain, di cui non vi faccio il nome, per elevate ragioni di sicurezza operativa. A cui ho risposto, in modo pubblico (quindi potete divulgarlo) in questo, pacato modo:
 
 ---
 
